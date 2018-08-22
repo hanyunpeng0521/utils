@@ -1,0 +1,73 @@
+package com.jarvis.base.util;
+
+import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
+
+/**
+ * 从含有‘，’的String或String[]中提取字符串源，得到以max为长度的字符串组的max级全排列。
+ * @author hyp
+ */
+public class AssembleUtil {
+
+    /**
+     * 有序的不重复的Set集合。
+     */
+    private static Set<String> set = new TreeSet<String>();
+
+    /**
+     *
+     * @param sourceStr 初始化的字符串源信息
+     * @param max       每种组合是几个数字
+     * @return Return:String[]
+     * Description:根据字符串“1,2,3,4,5,6,7”的格式计算出来一共有多少组组合
+     */
+    public static String[] getAssemble(String sourceStr, int max) {
+        String sourceList[] = sourceStr.split(",");
+        String[] array = getAssemble(sourceList, max);
+        return array;
+    }
+
+    /**
+     *
+     * @param sourceArray 初始化的字符串数组信息
+     * @param max         每种组合是几个数字
+     * @return Return:String[]
+     * Description: 根据字符串数组形式来计算一共有多少种组数{ "1", "2", "3", "4", "5","6","7" }
+     */
+    public static String[] getAssemble(String[] sourceArray, int max) {
+        for (int start = 0; start < sourceArray.length; start++) {
+            doSet(sourceArray[start], sourceArray, max);
+        }
+        String[] arr = new String[set.size()];
+        String[] array = set.toArray(arr);
+        set.clear();
+        return array;
+    }
+
+    /**
+     *
+     * @param start
+     * @param sourceList
+     * @param max
+     * @return Return:Set<String>
+     * Description:计算组数
+     */
+    private static Set<String> doSet(String start, String[] sourceList, int max) {
+        String[] olds = start.split("_");
+        if (olds.length == max) {
+            set.add(start.replaceAll("_", "").trim());
+        } else {
+            for (int s = 0; s < sourceList.length; s++) {
+                if (Arrays.asList(olds).contains(sourceList[s])) {
+                    continue;
+                } else {
+                    doSet(start + "_" + sourceList[s], sourceList, max);
+                }
+            }
+        }
+        return set;
+    }
+
+
+}

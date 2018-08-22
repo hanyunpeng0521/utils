@@ -1,0 +1,1522 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="data-spm" content="5176" />
+            <title>深入理解Android之AOP - 阿里云</title>
+    
+            <meta name="keywords" content="" />
+                <meta name="description" content="深入理解Android之AOP&nbsp;一、闲谈AOP大家都知道OOP,即ObjectOrientedProgramming,面向对象编程。而本文要介绍的是AOP。AOP是AspectOrientedProgramming的缩写,中译文为">
+                <link rel="alternate" media="only screen and(max-width: 640px)" href="https://m.aliyun.com/jiaocheng/77059.html">
+        <meta name="mobile-agent" content="format=xhtml;url=https://m.aliyun.com/jiaocheng/77059.html">
+        <meta name="mobile-agent" content="format=wml;url=https://m.aliyun.com/jiaocheng/77059.html">
+                <link rel="canonical" href="https://www.aliyun.com/jiaocheng/77059.html" >
+        <script src="//www.aliyun.com/zixun/assets/js/jquery-3.2.1.min.js"></script>
+    <link href="//www.aliyun.com/zixun/assets/css/moblie/reset.css" type="text/css" rel="stylesheet">
+    <link href="//www.aliyun.com/zixun/assets/css/moblie/pagation.css" type="text/css" rel="stylesheet">
+        <script src="//www.aliyun.com/zixun/assets/js/theme.js"></script>
+
+    <script src="https://g.alicdn.com/??aliyun/www-dpl/0.5.47/knight/js/util/aliyun-lego-system.js"></script>
+</head>
+<body data-spm="100033"><script type="text/javascript">
+(function (d) {
+var t=d.createElement("script");t.type="text/javascript";t.async=true;t.id="tb-beacon-aplus";
+t.setAttribute("exparams","category=&userid=&aplus&yunid=&yunpk=");
+t.src=("https:"==d.location.protocol?"https://s":"http://a")+".tbcdn.cn/s/aplus_v2.js";
+d.getElementsByTagName("head")[0].appendChild(t);
+})(document);
+</script>
+
+
+<link href="//www.aliyun.com/zixun/assets/css/article.css" type="text/css" rel="stylesheet">
+<link href="//www.aliyun.com/zixun/assets/css/public.css" type="text/css" rel="stylesheet">
+<link href="//www.aliyun.com/zixun/assets/css/reset.css" type="text/css" rel="stylesheet">
+
+
+<div aliyun-lego-data="//www.aliyun.com/lego/responsive/layout/menu_black"></div>
+
+<div class="banner">
+    
+
+<!-- exported styles -->
+
+
+<link rel="stylesheet" type="text/css" href="//g.alicdn.com/ali-mod/??www-aliyun-common-adv-1/0.0.9/index.css"/>
+
+
+
+
+  
+      
+  <!--region -->
+            
+                
+                <div data-spm="980815" data-moduleid="0" data-name="www-aliyun-common-adv-1" data-guid="980815" id="guid-980815" data-scene-id="1345773" data-scene-version="0" data-hidden="" data-gitgroup="ali-mod" data-ext="" data-engine="tce" class="www-aliyun-common-adv-1 J_Module" tms="www-aliyun-common-adv-1/0.0.9" tms-datakey="tce/1345773"><div class="module-wrap J_tb_lazyload dbl_tms_module_wrap" style="text-align: center;">
+  <!-- 避免用window的全局变量获取数据 -->
+  <textarea class="schemaData" style="display:none;">
+    {"moduleinfo":{"ads_count":[{"count_phone":1,"count":1}],"align":"center"},"ads":[{"canClose":"manual","padding":"0px 0px 0px 0px","img":"https://img.alicdn.com/tfs/TB1pIY1vWmWBuNjy1XaXXXCbXXa-1200-110.jpg","margin":"0px 0px 0px 0px","showClose":"true","background":"#000","link":"https://zhongbao.aliyun.com/","width":"auto","flowout":"false","autoCloseDelay":"5000","height":"auto"}],"countinfo":{"ads":{"length_pc":0,"length":0}},"$tmsId":"tce/1345773"}
+  </textarea>
+  <div class="">
+  
+  <div class="add-bg" style="background: #000;">
+  <a style="width: auto; height: auto; margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px; " target="_blank" href="https://zhongbao.aliyun.com/" class="adv-item">
+      <span  class="close"><i class="icon-wrong"></i></span>
+      <img src=https://img.alicdn.com/tfs/TB1pIY1vWmWBuNjy1XaXXXCbXXa-1200-110.jpg>
+    </a>
+  </div>
+  
+  </div>
+</div>
+</div>
+            
+  <!--region -->
+      
+  
+
+<!-- exported scripts -->
+
+
+<script src="//g.alicdn.com/ali-mod/??www-aliyun-common-adv-1/0.0.9/index.js"></script>
+
+
+
+</div>
+<div class="ul-container" data-spm="1">
+    <ul class="article">
+        <li class="list">
+            <a href="https://www.ailyun.com" class="hover"> 阿里云 </a>&nbsp>&nbsp
+            <a href="https://www.aliyun.com/jiaocheng/">教程中心</a>&nbsp;
+            <span>&nbsp>&nbsp</span>
+            <a href="https://www.aliyun.com/jiaocheng/android"> android教程 </a>&nbsp>&nbsp
+            <a href="https://www.aliyun.com/jiaocheng/77059.html" class="hover"> 深入理解Android之AOP </a>&nbsp;
+        </li>
+        <li class="zhinan">
+            深入理解Android之AOP
+        </li>
+        <li class="release-time">
+            <div>
+                <p>发布时间：2018-01-18 来源：网络 上传者：用户 </p>
+                <p style="padding-bottom: 0;">
+                    关键字:
+                                       <a href="https://www.aliyun.com/jiaocheng/topic_1791.html"></a>
+                    </p>
+            </div>
+            <a href="https://yq.aliyun.com/articles/new" id="publish">发表文章</a>
+        </li>
+        <li class="li3">
+            <span class="zhaiyao">摘要：</span>深入理解Android之AOP&nbsp;一、闲谈AOP大家都知道OOP,即ObjectOrientedProgramming,面向对象编程。而本文要介绍的是AOP。AOP是AspectOrientedProgramming的缩写,中译文为面向切向编程。OOP和AOP是什么关系呢?首先:&nbsp;lOOP和AOP都是方法论。我记得在刚学习C++的时候,最难学的并不是C++的语法,而是C++所代表的那种看问题的方法,即OOP。同样,今天在AOP中,我发现其难度并不在利用AOP        </li>
+<!-- 关键字 -->
+        <li class="article-content">
+            
+           <strong>深入理解Android之AOP</strong>&nbsp; 
+<br /> 
+<strong>一、闲谈AOP</strong> 
+<p>大家都知道OOP,即ObjectOriented Programming,面向对象编程。而本文要介绍的是AOP。AOP是Aspect Oriented Programming的缩写,中译文为面向切向编程。OOP和AOP是什么关系呢?首先:</p> 
+<p>&nbsp;</p>l 
+<em>OOP和AOP都是方法论</em>。我记得在刚学习C++的时候,最难学的并不是C++的语法,而是C++所代表的那种看问题的方法,即OOP。同样,今天在AOP中,我发现其难度并不在利用AOP干活,而是从AOP的角度来看待问题,设计解决方法。这就是为什么我特意强调 
+<em>AOP是一种方法论</em>的原因!l 在OOP的世界中,问题或者功能都被划分到一个一个的模块里边。每个模块专心干自己的事情,模块之间通过设计好的接口交互。从图示来看,OOP世界中,最常见的表示比如: 
+<p>&nbsp;</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/51a03e96db587d1ae87a42f13ed37cf0.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图1 Android Framework中的模块</p> 
+<br /> 
+<p>图1中所示为AndroidFramework中的模块。OOP世界中,大家画的模块图基本上是这样的,每个功能都放在一个模块里。非常好理解,而且确实简化了我们所处理问题的难度。</p> 
+<p>OOP的精髓是把功能或问题模块化,每个模块处理自己的家务事。但在现实世界中,并不是所有问题都能完美得划分到模块中。举个最简单而又常见的例子:现在想为每个模块加上日志功能,要求模块运行时候能输出日志。在不知道AOP的情况下,一般的处理都是:先设计一个日志输出模块,这个模块提供日志输出API,比如Android中的Log类。然后,其他模块需要输出日志的时候调用Log类的几个函数,比如e(TAG,...),w(TAG,...),d(TAG,...),i(TAG,...)等。</p> 
+<p>在没有接触AOP之前,包括我在内,想到的解决方案就是上面这样的。但是,从OOP角度看,除了日志模块本身,其他模块的家务事绝大部分情况下应该都不会包含日志输出功能。什么意思?以ActivityManagerService为例,你能说它的家务事里包含日志输出吗?显然,ActivityManagerService的功能点中不包含输出日志这一项。但实际上,软件中的众多模块确实又需要打印日志。这个日志输出功能,从整体来看,都是一个<em>面</em>上的。而这个面的范围,就不局限在单个模块里了,而是横跨多个模块。</p> 
+<p>&nbsp;</p>l 在没有AOP之前,各个模块要打印日志,就是自己处理。反正日志模块的那几个API都已经写好了,你在其他模块的任何地方,任何时候都可以调用。功能是得到了满足,但是好像没有 
+<em>Oriented</em>的感觉了。是的,随意加日志输出功能,使得其他模块的代码和日志模块耦合非常紧密。而且,将来要是日志模块修改了API,则使用它们的地方都得改。这种搞法,一点也不酷。 
+<p>&nbsp;</p> 
+<p>AOP的目标就是解决上面提到的不cool的问题。在AOP中:</p> 
+<p>&nbsp;</p>l 第一,我们要认识到OOP世界中,有些功能是横跨并嵌入众多模块里的,比如打印日志,比如统计某个模块中某些函数的执行时间等。这些功能在各个模块里分散得很厉害,可能到处都能见到。l 第二,AOP的目标是把这些功能集中起来,放到一个统一的地方来控制和管理。如果说,OOP如果是把问题划分到单个模块的话,那么AOP就是把涉及到众多模块的某一类问题进行统一管理。比如我们可以设计两个Aspects,一个是管理某个软件中所有模块的日志输出的功能,另外一个是管理该软件中一些特殊函数调用的权限检查。 
+<p>&nbsp;</p> 
+<p>讲了这么多,还是先来看个例子。在这个例子中,我们要:</p> 
+<p>&nbsp;</p>l Activity的生命周期的几个函数运行时,要输出日志。l 几个重要函数调用的时候,要检查有没有权限。 
+<p>&nbsp;</p> 
+<p>&nbsp;</p> 
+<strong>二、没有AOP的例子</strong> 
+<p>先来看没有AOP的情况下,代码怎么写。主要代码都在AopDemoActivity中</p> 
+<p>[--&gt;AopDemoActivity.java]</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">public class AopDemoActivity extends Activity {   private static final String TAG = AopDemoActivity;?  onCreate,onStart,onRestart,onPause,onResume,onStop,onDestory返回前,都输出一行日志   protected void onCreate(Bundle savedInstanceState) {       super.onCreate(savedInstanceState);       setContentView(R.layout.layout_main);       Log.e(TAG,onCreate);    }   protected void onStart() {       super.onStart();        Log.e(TAG, onStart);    }   protected void onRestart() {       super.onRestart();        Log.e(TAG, onRestart);    }    protectedvoid onResume() {       super.onResume();        Log.e(TAG, onResume);?   checkPhoneState会检查app是否申明了android.permission.READ_PHONE_STATE权限        checkPhoneState();    }   protected void onPause() {       super.onPause();        Log.e(TAG, onPause);    }   protected void onStop() {       super.onStop();        Log.e(TAG, onStop);    }   protected void onDestroy() {       super.onDestroy();        Log.e(TAG, onDestroy);    }   private void checkPhoneState(){       if(checkPermission(android.permission.READ_PHONE_STATE)== false){           Log.e(TAG,have no permission to read phone state);           return;        }       Log.e(TAG,Read Phone State succeed);       return;    }   private boolean checkPermission(String permissionName){       try{           PackageManager pm = getPackageManager();          //调用PackageMangaer的checkPermission函数,检查自己是否申明使用某权限           int nret = pm.checkPermission(permissionName,getPackageName());           return nret == PackageManager.PERMISSION_GRANTED;        }......    }} 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>代码很简单。但是从这个小例子中,你也会发现要是这个程序比较复杂的话,到处都加Log,或者在某些特殊函数加权限检查的代码,真的是一件挺繁琐的事情。</p> 
+<strong>三、AspectJ介绍</strong> 
+<strong>3.1 AspectJ极简介</strong> 
+<p>AOP虽然是方法论,但就好像OOP中的Java一样,一些先行者也开发了一套语言来支持AOP。目前用得比较火的就是AspectJ了,它是一种几乎和Java完全一样的语言,而且完全兼容Java(AspectJ应该就是一种扩展Java,但它不是像Groovy[1]那样的拓展。)。当然,除了使用AspectJ特殊的语言外,AspectJ还支持原生的Java,只要加上对应的AspectJ注解就好。所以,使用AspectJ有两种方法:</p> 
+<p>l 完全使用AspectJ的语言。这语言一点也不难,和Java几乎一样,也能在AspectJ中调用Java的任何类库。AspectJ只是多了一些关键词罢了。</p> 
+<p>l 或者使用纯Java语言开发,然后使用AspectJ注解,简称<em>@AspectJ</em>。</p> 
+<p>Anyway,不论哪种方法,最后都需要AspectJ的编译工具<em>ajc</em>来编译。由于AspectJ实际上脱胎于Java,所以ajc工具也能编译java源码。</p> 
+<p>AspectJ现在托管于Eclipse项目中,官方网站是:</p> 
+<p>&nbsp;</p>l http://www.eclipse.org/aspectj/ 
+<em>&lt;=AspectJ官方网站</em> 
+<em>l </em>http://www.eclipse.org/aspectj/doc/released/runtime-api/index.html 
+<em>&lt;=AspectJ类库参考文档,内容非常少</em>l http://www.eclipse.org/aspectj/doc/released/aspectj5rt-api/index.html 
+<em>&lt;<a href="" class="__cf_email__" data-cfemail="c8f58889bbb8adabbc82">aliyunzixun@xxx.com</a>文档</em>,以后我们用Annotation的方式最多。 
+<p>&nbsp;</p> 
+<strong>3.2 AspectJ语法</strong> 
+<p>题外话:AspectJ东西比较多,但是AOP做为<em>方法论</em>,它的学习和体会是需要一步一步,并且一定要结合实际来的。如果一下子讲太多,反而会疲倦。更可怕的是,有些胆肥的同学要是一股脑把所有高级玩法全弄上去,反而得不偿失。这就是是<em>方法论</em>学习和其他知识学习不一样的地方。请大家切记。</p> 
+<h4>3.2.1 Join Points介绍</h4> 
+<p>Join Points(以后简称<em>JPoints</em>)是AspectJ中最关键的一个概念。什么是JPoints呢?JPoints就是程序运行时的一些<em>执行点</em>。那么,一个程序中,哪些执行点是JPoints呢?比如:</p> 
+<p>&nbsp;</p>l 一个函数的调用可以是一个JPoint。比如Log.e()这个函数。e的执行可以是一个JPoint,而调用e的函数也可以认为是一个JPoint。l 设置一个变量,或者读取一个变量,也可以是一个JPoint。比如Demo类中有一个debug的boolean变量。设置它的地方或者读取它的地方都可以看做是JPoints。l for循环可以看做是JPoint。 
+<p>&nbsp;</p> 
+<p>理论上说,一个程序中很多地方都可以被看做是JPoint,但是AspectJ中,只有如表1所示的几种执行点被认为是JPoints:</p> 
+<p>表1 AspectJ中的Join Point</p> 
+<p><strong>Join Points</strong></p> 
+<p><strong>说明</strong></p> 
+<p>&nbsp;</p> 
+<p><strong>示例</strong></p> 
+<p><strong>method call</strong></p> 
+<p>函数调用</p> 
+<p>比如调用Log.e(),这是一处JPoint</p> 
+<p><strong>method execution</strong></p> 
+<p>函数执行</p> 
+<p>比如Log.e()的执行内部,是一处JPoint。注意它和method call的区别。method call是调用某个函数的地方。而execution是某个函数执行的内部。</p> 
+<p><strong>constructor call</strong></p> 
+<p>构造函数调用</p> 
+<p>和method call类似</p> 
+<p><strong>constructor execution</strong></p> 
+<p>构造函数执行</p> 
+<p>和method execution类似</p> 
+<p><strong>field get</strong></p> 
+<p>获取某个变量</p> 
+<p>比如读取DemoActivity.debug成员</p> 
+<p><strong>field set</strong></p> 
+<p>设置某个变量</p> 
+<p>比如设置DemoActivity.debug成员</p> 
+<p><strong>pre-initialization</strong></p> 
+<p>Object在构造函数中做得一些工作。</p> 
+<p>很少使用,详情见下面的例子</p> 
+<p><strong>initialization</strong></p> 
+<p>Object在构造函数中做得工作</p> 
+<p>详情见下面的例子</p> 
+<p><strong>static initialization</strong></p> 
+<p>类初始化</p> 
+<p>比如类的static{}</p> 
+<p><strong>handler</strong></p> 
+<p>异常处理</p> 
+<p>比如try catch(xxx)中,对应catch内的执行</p> 
+<p><strong>advice execution</strong></p> 
+<p>这个是AspectJ的内容,稍后再说</p> 
+<p>&nbsp;</p> 
+<p>表1列出了AspectJ所认可的JoinPoints的类型。下面我们来看个例子以直观体会一把。</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/d148023f81619b4742a8ba5ba62e41f5.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图2 示例代码</p> 
+<br /> 
+<p>图2是一个Java示例代码,下面我们将打印出其中所有的join points。图3所示为打印出来的join points:</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/becb57adf4c74a8348f2588db49eafa8.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图3 所有的join points</p> 
+<br /> 
+<p>图3中的输出为从左到右,我们来解释红框中的内容。先来看左图的第一个红框:</p> 
+<p>&nbsp;</p>l 
+<em>staticinitialization(test.Test. 
+ 
+  <clinit>
+   
+   ) 
+ 
+  </clinit></em>:表示当前是哪种类型的JPoint,括号中代表目标对象是谁(此处是指Test class的类初始化)。由于Test类没有指定static block,所以后面的 
+<em>at:Test.java:0 </em>表示代码在第0行(其实就是没有找到源代码的意思)。l Test类初始化完后,就该执行main函数了。所以,下一个JPoint就是execution(voidtest.Test.main(String[]))。括号中表示此JPoint对应的是test.Test.main函数。 
+<em>at:Test.java:30</em>表示这个JPoint在源代码的第 
+<em>30</em>行。大家可以对比图2的源码,很准确!l main函数里首先是执行System.out.println。而这一行代码实际包括两个JPoint。一个是 
+<em>get(PrintStream java.lang.System.out)</em>,get表示Field get,它表示从System中获取out对象。另外一个是 
+<em>call(void java.io.PrintStream.println(String))</em>,这是一个call类型的JPoint,表示执行out.println函数。 
+<p>&nbsp;</p> 
+<p>再来看左图第二个红框,它表示TestBase的类的初始化,由于源码中为TestBase定义了static块,所以这个JPoint清晰指出了源码的位置是<em>at:Test.java:5</em></p> 
+<p>接着看左图第三个红框,它和对象的初始化有关。在源码中,我们只是构造了一个TestDerived对象。它会先触发TestDerived Preinitialization JPoint,然后触发基类TestBase的PreInitialization JPoint。注意红框中的<em>before</em>和<em>after</em> 。在TestDerived和TestBase所对应的PreInitialization before和after中都没有包含其他JPoint。所以,Pre-Initialization应该是构造函数中一个比较基础的Phase。这个阶段不包括类中成员变量定义时就赋值的操作,也不包括构造函数中对某些成员变量进行的赋值操作。</p> 
+<p>而成员变量的初始化(包括成员变量定义时就赋值的操作,比如源码中的<em>int base = 0</em>,以及在构造函数中所做的赋值操作,比如源码中的<em>this.derived = 1000</em>)都被囊括到initialization阶段。请读者对应图三第二个红框到第三个红框(包括第3个红框的内容)看看是不是这样的。</p> 
+<p>最后来看第5个红框。它包括三个JPoint:</p> 
+<p>&nbsp;</p>l testMethod的call类型JPointl testMethod的execution类型JPonintl 以及对异常捕获的Handler类型JPoint 
+<p>&nbsp;</p> 
+<p>好了。JPoint的介绍就先到此。现在大家对JoinPoint应该有了一个很直观的体会,简单直白粗暴点说,JoinPoint就是一个程序中的关键函数(包括构造函数)和代码段(staticblock)。</p> 
+<p>为什么AspectJ首先要定义好JoinPoint呢?大家仔细想想就能明白,以打印log的AopDemo为例,log在哪里打印?自然是在一些关键点去打印。而谁是关键点?AspectJ定义的这些类型的JPoint就能满足我们绝大部分需求。</p> 
+<p>注意,要是想在一个for循环中打印一些日志,而AspectJ没有这样的JPoint,所以这个需求我们是无法利用AspectJ来实现了。另外,不同的软件框架对表1中的JPoint类型支持也不同。比如Spring中,不是所有AspectJ支持的JPoint都有。</p> 
+<h5>(1) 自己动手试</h5> 
+<p>图2的示例代码我也放到了https://code.csdn.net/Innost/androidaopdemo上。请小伙伴们自己下载玩耍。具体的操作方法是:</p> 
+<p>&nbsp;</p>l 下载得到androidaopdemo中,有一个aspectj-test目录。l aspectj-test目录中有一个libs目录,里边有一个文件aspectj-1.8.7.jar文件。执行这个文件( 
+<em>java -jar aspectj-1.8.7.jar</em>,安装aspectj)。安装完后,按照图示要求将aspectj的安装路径加到PATH中,然后export。这样,就可以在命令行中执行aspectj的命令了。比如编译工具 
+<em>ajc</em>。l 另外,libs下还有一个 
+<em>aspectjrt.jar</em>,这个是aspectjt运行时的依赖库。使用AspectJ的程序都要包含该jar包。l 执行create-jar.sh。它会编译几个文件,然后生成test.jar。l 执行test.jar( 
+<em>java -jar test.jar</em>),就会打印出图3的log。 
+<p>&nbsp;</p> 
+<p>我已经编译并提交了一个test.jar到git上,小伙伴们可以执行一把玩玩!</p> 
+<h4>3.2.2 Pointcuts介绍</h4> 
+<p>pointcuts这个单词不好翻译,此处直接用英文好了。那么,Pointcuts是什么呢?前面介绍的内容可知,一个程序会有很多的JPoints,即使是同一个函数(比如testMethod这个函数),还分为call类型和execution类型的JPoint。显然,不是所有的JPoint,也不是所有类型的JPoint都是我们关注的。再次以AopDemo为例,我们只要求在Activity的几个生命周期函数中打印日志,只有这几个生命周期函数才是我们业务需要的JPoint,而其他的什么JPoint我不需要关注。</p> 
+<p>怎么从一堆一堆的JPoints中选择自己想要的JPoints呢?恩,这就是Pointcuts的功能。一句话,Pointcuts的目标是提供一种方法使得开发者能够选择自己感兴趣的JoinPoints。</p> 
+<p>在图2的例子中,怎么把Test.java中所有的Joinpoint选择出来呢?用到的pointcut格式为:</p> 
+<p><em>pointcuttestAll():within(Test)</em>。</p> 
+<p>AspectJ中,pointcut有一套标准语法,涉及的东西很多,还有一些比较高级的玩法。我自己琢磨了半天,需不需要把这些内容一股脑都搬到此文呢?回想我自己学习AOP的经历,好像看了几本书,记得比较清楚的都是简单的case,而那些复杂的case则是到实践中,确实有需求了,才回过头来,重新查阅文档来实施的。恩,那就一步一步来吧。</p> 
+<h5>(1) 一个Pointcuts例子</h5> 
+<p>直接来看一个例子,现在我想把图2中的示例代码中,那些调用println的地方找到,该怎么弄?代码该这么写:</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">public pointcut  testAll(): call(public  *  *.println(..)) &amp;;&amp;; !within(TestAspect) ; 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>注意,aspectj的语法和Java一样,只不过多了一些关键词</p> 
+<p>我们来看看上述代码</p> 
+<p>? 第一个public:表示这个pointcut是public访问。这主要和aspect的继承关系有关,属于AspectJ的高级玩法,本文不考虑。</p> 
+<p>? pointcut:关键词,表示这里定义的是一个pointcut。pointcut定义有点像函数定义。总之,在AspectJ中,你得定义一个pointcut。</p> 
+<p>? testAll():pointcut的名字。在AspectJ中,定义Pointcut可分为有名和匿名两种办法。个人建议使用named方法。因为在后面,我们要使用一个pointcut的话,就可以直接使用它的名字就好。</p> 
+<p>? testAll后面有一个冒号,这是pointcut定义名字后,必须加上。冒号后面是这个pointcut怎么选择Joinpoint的条件。</p> 
+<p>? 本例中,call(public * *.println(..))是一种选择条件。call表示我们选择的Joinpoint类型为call类型。</p> 
+<p>? public **.println(..):这小行代码使用了通配符。由于我们这里选择的JoinPoint类型为call类型,它对应的目标JPoint一定是某个函数。所以我们要找到这个/些函数。public 表示目标JPoint的访问类型(public/private/protect)。第一个*表示返回值的类型是任意类型。第二个*用来指明包名。此处不限定包名。紧接其后的println是函数名。这表明我们选择的函数是任何包中定义的名字叫println的函数。当然,唯一确定一个函数除了包名外,还有它的参数。在(..)中,就指明了目标函数的参数应该是什么样子的。比如这里使用了通配符..,代表任意个数的参数,任意类型的参数。</p> 
+<p>? 再来看call后面的&amp;;&amp;;:AspectJ可以把几个条件组合起来,目前支持 &amp;;&amp;;,||,以及!这三个条件。这三个条件的意思不用我说了吧?和Java中的是一样的。</p> 
+<p>? 来看最后一个!within(TestAspectJ):前面的!表示不满足某个条件。within是另外一种类型选择方法,特别注意,这种类型和前面讲到的joinpoint的那几种类型不同。within的类型是数据类型,而joinpoint的类型更像是动态的,执行时的类型。</p> 
+<p>上例中的pointcut合起来就是:</p> 
+<p>&nbsp;</p>l 选择那些调用println(而且不考虑println函数的参数是什么)的Joinpoint。l 另外,调用者的类型不要是TestAspect的。 
+<p>&nbsp;</p> 
+<p>图4展示了执行结果:</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/efb766fd56264db3a8f030cdff5b2289.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图4 新pointcut执行结果</p> 
+<br /> 
+<p>我在图2所示的源码中,为Test类定义了一个public static void println()函数,所以图4的执行结果就把这个println给匹配上了。</p> 
+<p>看完例子,我们来讲点理论。</p> 
+<h5>(2) 直接针对JoinPoint的选择</h5> 
+<p>pointcuts中最常用的选择条件和Joinpoint的类型密切相关,比如图5:</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/5dae7cf322db2be6af109b522c56ef90.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图5 不同类型的JPoint对应的pointcuts查询方法</p> 
+<br /> 
+<p>以图5为例,如果我们想选择类型为methodexecution的JPoint,那么pointcuts的写法就得包括execution(XXX)来限定。</p> 
+<p>除了指定JPoint类型外,我们还要更进一步选择目标函数。选择的根据就是图5中列出的什么MethodSignature,ConstructorSignature,TypeSinature,FieldSignature等。名字听起来陌生得很,其实就是指定JPoint对应的函数(包括构造函数),Static block的信息。比如图4中的那个println例子,首先它的JPoint类型是call,所以它的查询条件是根据MethodSignature来表达。一个Method Signature的完整表达式为:</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">@注解 访问权限 返回值的类型 包名.函数名(参数)?  @注解和访问权限(public/private/protect,以及static/final)属于可选项。如果不设置它们,则默认都会选择。以访问权限为例,如果没有设置访问权限作为条件,那么public,private,protect及static、final的函数都会进行搜索。?  返回值类型就是普通的函数的返回值类型。如果不限定类型的话,就用*通配符表示?  包名.函数名用于查找匹配的函数。可以使用通配符,包括*和..以及+号。其中*号用于匹配除.号之外的任意字符,而..则表示任意子package,+号表示子类。     比如:     java.*.Date:可以表示java.sql.Date,也可以表示java.util.Date     Test*:可以表示TestBase,也可以表示TestDervied     java..*:表示java任意子类     java..*Model+:表示Java任意package中名字以Model结尾的子类,比如TabelModel,TreeModel     等?  最后来看函数的参数。参数匹配比较简单,主要是参数类型,比如:     (int, char):表示参数只有两个,并且第一个参数类型是int,第二个参数类型是char     (String, ..):表示至少有一个参数。并且第一个参数类型是String,后面参数类型不限。在参数匹配中,     ..代表任意参数个数和类型     (Object ...):表示不定个数的参数,且类型都是Object,这里的...不是通配符,而是Java中代表不定参数的意思 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>是不是很简单呢?</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">Constructorsignature和Method Signature类似,只不过构造函数没有返回值,而且函数名必须叫new。比如:public *..TestDerived.new(..):?  public:选择public访问权限?  *..代表任意包名?  TestDerived.new:代表TestDerived的构造函数?  (..):代表参数个数和类型都是任意再来看Field Signature和Type Signature,用它们的地方见图5。下面直接上几个例子:Field Signature标准格式:@注解 访问权限 类型 类名.成员变量名?  其中,@注解和访问权限是可选的?  类型:成员变量类型,*代表任意类型?  类名.成员变量名:成员变量名可以是*,代表任意成员变量比如,set(inttest..TestBase.base):表示设置TestBase.base变量时的JPointType Signature:直接上例子staticinitialization(test..TestBase):表示TestBase类的static blockhandler(NullPointerException):表示catch到NullPointerException的JPoint。注意,图2的源码第23行截获的其实是Exception,其真实类型是NullPointerException。但是由于JPointer的查询匹配是静态的,即编译过程中进行的匹配,所以handler(NullPointerException)在运行时并不能真正被截获。只有改成handler(Exception),或者把源码第23行改成NullPointerException才行。 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>以上例子,读者都可以在aspectj-test例子中自己都试试。</p> 
+<h5>(3) 间接针对JPoint的选择</h5> 
+<p>除了根据前面提到的Signature信息来匹配JPoint外,AspectJ还提供其他一些选择方法来选择JPoint。比如某个类中的所有JPoint,每一个函数执行流程中所包含的JPoint。</p> 
+<p>特别强调,不论什么选择方法,最终都是为了找到目标的JPoint。</p> 
+<p>表2列出了一些常用的非JPoint选择方法:</p> 
+<p>表2 其它常用选择方法</p> 
+<p><strong>关键词</strong></p> 
+<p><strong>说明</strong></p> 
+<p>&nbsp;</p> 
+<p><strong>示例</strong></p> 
+<p><strong>within(</strong>TypePattern<strong>)</strong></p> 
+<p>TypePattern标示package或者类。TypePatter可以使用通配符</p> 
+<p>表示某个Package或者类中的所有JPoint。比如</p> 
+<p>within(Test):Test类中(包括内部类)所有JPoint。图2所示的例子就是用这个方法。</p> 
+<p><strong>withincode(</strong>Constructor Signature|Method Signature<strong>)</strong></p> 
+<p>表示某个构造函数或其他函数执行过程中涉及到的JPoint</p> 
+<p>比如</p> 
+<p>withinCode(* TestDerived.testMethod(..))</p> 
+<p>表示testMethod涉及的JPoint</p> 
+<p>withinCode( *.Test.new(..))</p> 
+<p>表示Test构造函数涉及的JPoint</p> 
+<p><strong>cflow(</strong>pointcuts<strong>)</strong></p> 
+<p>cflow是call flow的意思</p> 
+<p>cflow的条件是一个pointcut</p> 
+<p>比如</p> 
+<p>cflow(call TestDerived.testMethod):表示调用TestDerived.testMethod函数时所包含的JPoint,包括testMethod的call这个JPoint本身</p> 
+<p><strong>cflowbelow(</strong>pointcuts<strong>)</strong></p> 
+<p>cflow是call flow的意思。</p> 
+<p>比如</p> 
+<p>cflowblow(call TestDerived.testMethod):表示调用TestDerived.testMethod函数时所包含的JPoint,<em>不</em>包括testMethod的call这个JPoint本身</p> 
+<p><strong>this(</strong>Type<strong>)</strong></p> 
+<p>JPoint的this对象是Type类型。</p> 
+<p>(其实就是判断Type是不是某种类型,即是否满足instanceof Type的条件)</p> 
+<p>JPoint是代码段(不论是函数,异常处理,static block),从语法上说,它都属于一个类。如果这个类的类型是Type标示的类型,则和它相关的JPoint将全部被选中。</p> 
+<p>图2示例的testMethod是TestDerived类。所以</p> 
+<p>this(TestDerived)将会选中这个testMethod JPoint</p> 
+<p><strong>target(</strong>Type<strong>)</strong></p> 
+<p>JPoint的target对象是Type类型</p> 
+<p>和this相对的是target。不过target一般用在call的情况。call一个函数,这个函数可能定义在其他类。比如testMethod是TestDerived类定义的。那么</p> 
+<p>target(TestDerived)就会搜索到调用testMethod的地方。但是不包括testMethod的execution JPoint</p> 
+<p><strong>args(</strong>TypeSignature<strong>)</strong></p> 
+<p>用来对JPoint的参数进行条件搜索的</p> 
+<p>比如args(int,..),表示第一个参数是int,后面参数个数和类型不限的JPoint。</p> 
+<p>&nbsp;</p> 
+<p>上面这些东西,建议读者:</p> 
+<p>&nbsp;</p>l 进入 
+<em>androidaopdemo/aspectj-test</em>目录。l 修改 
+<em>test/TestAspect.aj</em>文件。主要是其中的pointcuts:testAll()这一行。按照图2中的解释说明,随便改改试试。l 执行./create-jar.sh,得到一个test.jar包,然后java -jar test.jar得到执行结果 
+<p>&nbsp;</p> 
+<p>注意:this()和target()匹配的时候不能使用通配符。</p> 
+<p>图6给出了修改示例和输出:</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/af0b6a5b1ab1a87226dd7724aae9e75f.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图6 示例代码和输出结果</p> 
+<br /> 
+<p>注意,不是所有的AOP实现都支持本节所说的查询条件。比如Spring就不支持withincode查询条件。</p> 
+<h4>3.2.3 advice和aspect介绍</h4> 
+<p>恭喜,看到这个地方来,AspectJ的核心部分就掌握一大部分了。现在,我们知道如何通过pointcuts来选择合适的JPoint。那么,下一步工作就很明确了,选择这些JPoint后,我们肯定是需要干一些事情的。比如前面例子中的输出都有before,after之类的。这其实JPoint在执行前,执行后,都执行了一些我们设置的代码。在AspectJ中,这段代码叫advice。简单点说,advice就是一种<em>Hook</em>。</p> 
+<p>ASpectJ中有好几个Hook,主要是根据JPoint执行时机的不同而不同,比如下面的:</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">before():testAll(){   System.out.println(before calling:  + thisJoinPoint);//打印这个JPoint的信息  System.out.println(      at: + thisJoinPoint.getSourceLocation());//打印这个JPoint对应的源代码位置} 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>testAll()是前面定义的pointcuts,而<em>before()</em>定义了在这个pointcuts选中的JPoint执行前我们要干的事情。</p> 
+<p>表3列出了AspectJ所支持的Advice的类型:</p> 
+<p>表3 advice的类型</p> 
+<p><strong>关键词</strong></p> 
+<p><strong>说明</strong></p> 
+<p>&nbsp;</p> 
+<p><strong>示例</strong></p> 
+<p><strong>before()</strong></p> 
+<p>before advice</p> 
+<p>表示在JPoint执行之前,需要干的事情</p> 
+<p><strong>after()</strong></p> 
+<p>after advice</p> 
+<p>表示JPoint自己执行完了后,需要干的事情。</p> 
+<p><strong>after():returning</strong>(返回值类型)</p> 
+<p><strong>after():throwing</strong>(异常类型)</p> 
+<p>returning和throwing后面都可以指定具体的类型,如果不指定的话则匹配的时候不限定类型</p> 
+<p>假设JPoint是一个函数调用的话,那么函数调用执行完有两种方式退出,一个是正常的return,另外一个是抛异常。</p> 
+<p>注意,after()默认包括returning和throwing两种情况</p> 
+<p><strong>返回值类型 around()</strong></p> 
+<p>before和around是指JPoint执行前或执行后备触发,而around就替代了原JPoint</p> 
+<p>around是替代了原JPoint,如果要执行原JPoint的话,需要调用proceed</p> 
+<p>注意,after和before没有返回值,但是around的目标是替代原JPoint的,所以它一般会有返回值,而且返回值的类型需要匹配被选中的JPoint。我们来看个例子,见图7。</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/7d8227cb72edd955513f30cedf28c476.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图7 advice示例和结果</p> 
+<br /> 
+<p>图7中:</p> 
+<p>&nbsp;</p>l 第一个红框是修改后的testMethod,在这个testMethod中,肯定会抛出一个空指针异常。l 第二个红框是我们配置的advice,除了before以外,还加了一个around。我们重点来看around,它的返回值是Object。虽然匹配的JPoint是testMethod,其定义的返回值是void。但是AspectJ考虑的很周到。在around里,可以设置返回值类型为Object来表示返回任意类型的返回值。AspectJ在真正返回参数的时候,会自动进行转换。比如,假设 
+<em>inttestMethod</em>定义了int作为返回值类型,我们在around里可以返回一个Integer,AspectJ会自动转换成int作为返回值。l 再看around中的 
+<em>//proceed()</em>这句话。这代表调用真正的JPoint函数,即testMethod。由于这里我们屏蔽了proceed,所以testMethod真正的内容并未执行,故运行的时候空指针异常就不会抛出来。也就是说,我们完全截获了testMethod的运行, 
+<em>甚至可以任意修改它,让它执行别的函数都没有问题。</em>。 
+<p>&nbsp;</p> 
+<p>注意:从技术上说,around是完全可以替代before和after的。图7中第二个红框还把after给注释掉了。如果不注释掉,编译时候报错,[error]circular advice precedence: can't determine precedence between two or morepieces of advice that apply to the same join point: method-execution(voidtest.Test$TestDerived.testMethod())(大家可以自己试试)。我猜测其中的原因是around和after冲突了。around本质上代表了目标JPoint,比如此处的testMethod。而after是testMethod之后执行。那么这个testMethod到底是around还是原testMethod呢?真是傻傻分不清楚!</p> 
+<p>(我觉得再加一些限制条件给after是可以避免这个问题的,但是没搞成功...)</p> 
+<p>advice讲完了。现在回顾下3.2节从开始到现在我们学到了哪些内容:</p> 
+<p>&nbsp;</p>l AspectJ中各种类型的JoinPoint,JPoint是一个程序的关键执行点,也是我们关注的重点。l pointcuts:提供了一种方法来选择目标JPoint。程序有很多JPoint,但是需要一种方法来让我们选择我们关注的JPoint。这个方法就是利用pointcuts来完成的。l 通过pointcuts选择了目标JPoint后,我们总得干点什么吧?这就用上了advice。advice包括好几种类型,一般情况下都够我们用了。 
+<p>&nbsp;</p> 
+<p>上面这些东西都有点像函数定义,在Java中,这些东西都是要放到一个class里的。在AspectJ中,也有类似的数据结构,叫aspect。</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">public aspect 名字 {//aspect关键字和class的功能一样,文件名以.aj结尾 pointcuts定义... advice定义...} 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>你看,通过这种方式,定义一个aspect类,就把相关的JPoint和advice包含起来,是不是形成了一个“关注面”?比如:</p> 
+<p>&nbsp;</p>l 我们定义一个LogAspect,在LogAspect中,我们在关键JPoint上设置advice,这些advice就是打印日志l 再定义一个SecurityCheckAspect,在这个Aspect中,我们在关键JPoint上设置advice,这些advice将检查调用app是否有权限。 
+<p>&nbsp;</p> 
+<p>通过这种方式,我们在原来的JPoint中,就不需要写log打印的代码,也不需要写权限检查的代码了。所有这些关注点都挪到对应的Aspectj文件中来控制。恩,这就是AOP的精髓。</p> 
+<p>注意,读者在把玩代码时候,一定会碰到AspectJ语法不熟悉的问题。所以请读者记得随时参考官网的文档。这里有一个官方的语法大全:</p> 
+<p>http://www.eclipse.org/aspectj/doc/released/quick5.pdf 或者官方的另外一个文档也可以:</p> 
+<p>http://www.eclipse.org/aspectj/doc/released/progguide/semantics.html</p> 
+<p>&nbsp;</p> 
+<h4>3.2.4 参数传递和JPoint信息</h4> 
+<h5>(1) 参数传递</h5> 
+<p>到此,AspectJ最基本的东西其实讲差不多了,但是在实际使用AspectJ的时候,你会发现前面的内容还欠缺一点,尤其是advice的地方:</p> 
+<p>l 前面介绍的advice都是没有参数信息的,而JPoint肯定是或多或少有参数的。而且advice既然是对JPoint的截获或者hook也好,肯定需要利用传入给JPoint的参数干点什么事情。比方所around advice,我可以对传入的参数进行检查,如果参数不合法,我就直接返回,根本就不需要调用proceed做处理。</p> 
+<p>往advice传参数比较简单,就是利用前面提到的<em>this()</em>,<em>target()</em>,<em>args()</em>等方法。另外,整个pointcuts和advice编写的语法也有一些区别。具体方法如下:</p> 
+<p>? 先在pointcuts定义时候指定参数类型和名字</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">pointcut testAll(Test.TestDerived derived,int x):call(*Test.TestDerived.testMethod(..))             &amp;;&amp;; target(derived)&amp;;&amp;; args(x) 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>? 注意上述pointcuts的写法,首先在testAll中定义参数类型和参数名。这一点和定义一个函数完全一样</p> 
+<p>? 接着看target和args。此处的target和args括号中用得是参数名。而参数名则是在前面pointcuts中定义好的。这属于target和args的另外一种用法。</p> 
+<p>? 注意,增加参数并不会影响pointcuts对JPoint的匹配,上面的pointcuts选择和</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">pointcut testAll():call(*Test.TestDerived.testMethod(..)) &amp;;&amp;; target(Test.TestDerived) &amp;;&amp;;args(int)是一样的 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>只不过我们需要把参数传入advice,才需要改造</p> 
+<p>接下来是修改advice:</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">Object around(Test.TestDerived derived,int x):testAll(derived,x){     System.out.println(     arg1= + derived);     System.out.println(     arg2= + x);      return proceed(derived,x); //注意,proceed就必须把所有参数传进去。} 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>? advice的定义现在也和函数定义一样,把参数类型和参数名传进来。</p> 
+<p>? 接着把参数名传给pointcuts,此处是testAll。注意,advice必须和使用的pointcuts在参数类型和名字上保持一致。</p> 
+<p>? 然后在advice的代码中,你就可以引用参数了,比如derived和x,都可以打印出来。</p> 
+<p>总结,参数传递其实并不复杂,关键是得记住语法:</p> 
+<p>&nbsp;</p>l pointcuts修改:像定义函数一样定义pointcuts,然后在this,target或args中绑定参数名(注意,不再是参数类型,而是参数名)。l advice修改:也像定义函数一样定义advice,然后在冒号后面的pointcuts中绑定参数名(注意是参数名)l 在advice的代码中使用参数名。 
+<p>&nbsp;</p> 
+<h5>(2) JoinPoint信息收集</h5> 
+<p>我们前面示例中都打印出了JPoint的信息,比如当前调用的是哪个函数,JPoint位于哪一行代码。这些都属于JPoint的信息。AspectJ为我们提供如下信息:</p> 
+<p>&nbsp;</p>l thisJoinpoint对象:在advice代码中可直接使用。代表JPoint每次被触发时的一些动态信息,比如参数啊之类的、l thisJoinpointStatic对象:在advice代码中可直接使用,代表JPoint中那些不变的东西。比如这个JPoint的类型,JPoint所处的代码位置等。l thisEnclosingJoinPointStaticPart对象:在advice代码中可直接使用。也代表JPoint中不可变的部分,但是它包含的东西和JPoint的类型有关,比如对一个call类型JPoint而言,thisEnclosingJoinPointStaticPart代表包含调用这个JPoint的函数的信息。对一个handler类型的JPoint而言,它代表包含这个try/catch的函数的信息。 
+<p>&nbsp;</p> 
+<p>关于thisJoinpoint,建议大家直接查看API文档,非常简单。其地址位于http://www.eclipse.org/aspectj/doc/released/runtime-api/index.html。</p> 
+<p>&nbsp;</p> 
+<strong>四、使用AOP的例子</strong> 
+<p>现在正式回到我们的AndroidAopDemo这个例子来。我们的目标是为AopDemoActivity的几个Activity生命周期函数加上log,另外为checkPhoneState加上权限检查。一切都用AOP来集中控制。</p> 
+<p>前面提到说AspectJ需要编写aj文件,然后把AOP代码放到aj文件中。但是在Android开发中,我建议不要使用aj文件。因为aj文件只有AspectJ编译器才认识,而Android编译器不认识这种文件。所以当更新了aj文件后,编译器认为源码没有发生变化,所以不会编译它。</p> 
+<p>当然,这种问题在其他不认识aj文件的java编译环境中也存在。所以,AspectJ提供了一种基于注解的方法来把AOP实现到一个普通的Java文件中。这样我们就把AOP当做一个普通的Java文件来编写、编译就好。</p> 
+<strong>4.1 打印Log</strong> 
+<p>马上来看AopDemoActivity对应的DemoAspect.java文件吧。先看输出日志第一版本:</p> 
+<p>[--&gt;第一版本]</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">package com.androidaop.demo;import android.util.Log;import org.aspectj.lang.annotation.Aspect;import org.aspectj.lang.annotation.Before;import org.aspectj.lang.annotation.Pointcut;import org.aspectj.lang.JoinPoint; @Aspect   //必须使用@AspectJ标注,这样class DemoAspect就等同于 aspect DemoAspect了public class DemoAspect {    staticfinal String TAG = DemoAspect;/*@Pointcut:pointcut也变成了一个注解,这个注解是针对一个函数的,比如此处的logForActivity()其实它代表了这个pointcut的名字。如果是带参数的pointcut,则把参数类型和名字放到代表pointcut名字的logForActivity中,然后在@Pointcut注解中使用参数名。基本和以前一样,只是写起来比较奇特一点。后面我们会介绍带参数的例子*/@Pointcut(execution(* com.androidaop.demo.AopDemoActivity.onCreate(..)) ||        +execution(* com.androidaop.demo.AopDemoActivity.onStart(..)))public void logForActivity(){};  //注意,这个函数必须要有实现,否则Java编译器会报错 /*@Before:这就是Before的advice,对于after,after -returning,和after-throwing。对于的注解格式为@After,@AfterReturning,@AfterThrowing。Before后面跟的是pointcut名字,然后其代码块由一个函数来实现。比如此处的log。*/    @Before(logForActivity())    public void log(JoinPoint joinPoint){       //对于使用Annotation的AspectJ而言,JoinPoint就不能直接在代码里得到多了,而需要通过      //参数传递进来。       Log.e(TAG, joinPoint.toShortString());    }}  
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>提示:如果开发者已经切到AndroidStudio的话,AspectJ注解是可以被识别并能自动补齐。</p> 
+<p>上面的例子仅仅是列出了onCreate和onStart两个函数的日志,如果想在所有的onXXX这样的函数里加上log,该怎么改呢?</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">@Pointcut(execution(* *..AopDemoActivity.on*(..)))public void logForActivity(){}; 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>图8给出这个例子的执行结果:</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/2754484e0bff8ed190dcb0db0c646493.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图8 AopDemoActivity执行结果</p> 
+<br /> 
+<strong>4.2 检查权限</strong> 
+<h4>4.2.1 使用注解</h4> 
+<p>检查权限这个功能的实现也可以采用刚才打印log那样,但是这样就没有太多意思了。我们玩点高级的。不过这个高级的玩法也是来源于现实需求:</p> 
+<p>&nbsp;</p>l 权限检查一般是针对API的,比如调用者是否有权限调用某个函数。l API往往是通过SDK发布的。一般而言,我们会在这个函数的注释里说明需要调用者声明哪些权限。l 然后我们在API检查调用者是不是申明了文档中列出的权限。 
+<p>&nbsp;</p> 
+<p>如果我有10个API,10个不同的权限,那么在10个函数的注释里都要写,太麻烦了。怎么办?这个时候我想到了注解。注解的本质是源代码的描述。权限声明,从语义上来说,其实是属于API定义的一部分,二者是一个统一体,而不是分离的。</p> 
+<p>Java提供了一些默认的注解,不过此处我们要使用自己定义的注解:</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">package com.androidaop.demo;import java.lang.annotation.ElementType;import java.lang.annotation.Retention;import java.lang.annotation.RetentionPolicy;import java.lang.annotation.Target; //第一个@Target表示这个注解只能给函数使用//第二个@Retention表示注解内容需要包含的Class字节码里,属于运行时需要的。@Target(ElementType.METHOD)@Retention(RetentionPolicy.RUNTIME)public @interface SecurityCheckAnnotation {//@interface用于定义一个注解。    publicString declaredPermission();  //declarePermssion是一个函数,其实代表了注解里的参数}怎么使用注解呢?接着看代码://为checkPhoneState使用SecurityCheckAnnotation注解,并指明调用该函数的人需要声明的权限   @SecurityCheckAnnotation(declaredPermission=android.permission.READ_PHONE_STATE)   private void checkPhoneState(){        //如果不使用AOP,就得自己来检查权限       if(checkPermission(android.permission.READ_PHONE_STATE) ==false){           Log.e(TAG,have no permission to read phone state);           return;        }       Log.e(TAG,Read Phone State succeed);       return;    } 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<h4>4.2.2 检查权限</h4> 
+<p>下面,我们来看看如何在AspectJ中,充分利用这注解信息来帮助我们检查权限。</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">/*来看这个Pointcut,首先,它在选择Jpoint的时候,把@SecurityCheckAnnotation使用上了,这表明所有那些public的,并且携带有这个注解的API都是目标JPoint接着,由于我们希望在函数中获取注解的信息,所有这里的poincut函数有一个参数,参数类型是SecurityCheckAnnotation,参数名为ann这个参数我们需要在后面的advice里用上,所以pointcut还使用了@annotation(ann)这种方法来告诉AspectJ,这个ann是一个注解*/  @Pointcut(execution(@SecurityCheckAnnotation public * *..*.*(..)) &amp;;&amp;; @annotation(ann))  publicvoid checkPermssion(SecurityCheckAnnotationann){}; /*接下来是advice,advice的真正功能由check函数来实现,这个check函数第二个参数就是我们想要的注解。在实际运行过程中,AspectJ会把这个信息从JPoint中提出出来并传递给check函数。*/   @Before(checkPermssion(securityCheckAnnotation))    publicvoid check(JoinPoint joinPoint,SecurityCheckAnnotationsecurityCheckAnnotation){        //从注解信息中获取声明的权限。       String neededPermission = securityCheckAnnotation.declaredPermission();       Log.e(TAG, joinPoint.toShortString());       Log.e(TAG, 	needed permission is  + neededPermission);       return;    } 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>如此这般,我们在API源码中使用的注解信息,现在就可以在AspectJ中使用了。这样,我们在源码中定义注释,然后利用AspectJ来检查。图9展示了执行的结果</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/031241b7543846d5abfb03a60e741835.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图9 权限检查的例子</p> 
+<br /> 
+<h4>4.2.3 和其他模块交互</h4> 
+<p>事情这样就完了?很明显没有。为什么?刚才权限检查只是简单得打出了日志,但是并没有真正去做权限检查。如何处理?这就涉及到AOP如何与一个程序中其他模块交互的问题了。初看起来容易,其实有难度。</p> 
+<p>比如,DemoAspect虽然是一个类,但是没有构造函数。而且,我们也没有在代码中主动去构造它。根据AsepctJ的说明,DemoAspect不需要我们自己去构造,AspectJ在编译的时候会把构造函数给你自动加上。具体在程序什么位置加上,其实是有规律的,但是我们并不知道,也不要去知道。</p> 
+<p>这样的话,DemoAspect岂不是除了打打log就没什么作用了?非也!以此例的权限检查为例,我们需要:</p> 
+<p>&nbsp;</p>l 把真正进行权限检查的地方封装到一个模块里,比如SecurityCheck中。l SecurityCheck往往在一个程序中只会有一个实例。所以可以为它提供一个函数,比如getInstance以获取SecurityCheck实例对象。l 我们就可以在DemoAspect中获取这个对象,然后调用它的check函数,把最终的工作由SecurityCheck来检查了。 
+<p>&nbsp;</p> 
+<p>恩,这其实是Aspect的真正作用,它负责收集Jpoint,设置advice。一些简单的功能可在Aspect中来完成,而一些复杂的功能,则只是有Aspect来统一收集信息,并交给专业模块来处理。</p> 
+<p>最终代码:</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">  @Before(checkPermssion(securityCheckAnnotation))    publicvoid check(JoinPoint joinPoint,SecurityCheckAnnotation securityCheckAnnotation){       String neededPermission = securityCheckAnnotation.declaredPermission();       Log.e(TAG, 	needed permission is  + neededPermission);        SecurityCheckManager manager =SecurityCheckManager.getInstanc();       if(manager.checkPermission(neededPermission) == false){           throw new SecurityException(Need to declare permission: + neededPermission);        }       return;    } 
+<br /> 
+<p>&nbsp;</p> 
+<p>图10所示为最终的执行结果。</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/21e265405173b8f93952759a02913c26.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图10 执行真正的权限检查</p> 
+<br /> 
+<p>注意,</p> 
+<p>&nbsp;</p>1 所有代码都放到https://code.csdn.net/Innost/androidaopdemo上了....2 编译:请在ubuntu下使用gradle assemble。编译结果放在out/apps/目录下。关于gradle的使用,请大家参考我的另外一篇重磅文章http://blog.csdn.net/innost/article/details/48228651 
+<p>&nbsp;</p> 
+<strong>五、其他、总结和参考文献</strong> 
+<p>最后我们来讲讲其他一些内容。首先是AspectJ的编译。</p> 
+<strong>5.1 AspectJ编译</strong> 
+<p>&nbsp;</p>l AspectJ比较强大,除了支持对source文件(即aj文件、或@AspectJ注解的Java文件,或普通java文件)直接进行编译外,l 还能对Java字节码(即对class文件)进行处理。有感兴趣的同学可以对aspectj-test小例子的class文件进行反编译,你会发现AspectJ无非是在被选中的JPoint的地方加一些hook函数。当然Before就是在调用JPoint之前加,After就是在JPoint返回之前加。l 更高级的做法是当class文件被加载到虚拟机后,由虚拟机根据AOP的规则进行hook。 
+<p>&nbsp;</p> 
+<p>在Android里边,我们用得是第二种方法,即对class文件进行处理。来看看代码:</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">//AndroidAopDemo.build.gradle//此处是编译一个App,所以使用的applicationVariants变量,否则使用libraryVariants变量//这是由Android插件引入的。所以,需要import com.android.build.gradle.AppPlugin;android.applicationVariants.all { variant -&gt;   /*     这段代码之意是:     当app编译个每个variant之后,在javaCompile任务的最后添加一个action。此action     调用ajc函数,对上一步生成的class文件进行aspectj处理。   */    AppPluginplugin = project.plugins.getPlugin(AppPlugin)   JavaCompile javaCompile = variant.javaCompile   javaCompile.doLast{       String bootclasspath =plugin.project.android.bootClasspath.join(File.pathSeparator)       //ajc是一个函数,位于utils.gradle中        ajc(bootclasspath,javaCompile)    }} 
+<br /> 
+<br /> 
+<p>&nbsp;</p> 
+<p>ajc函数其实和我们手动试玩aspectj-test目标一样,只是我们没有直接调用ajc命令,而是利用AspectJ提供的API做了和ajc命令一样的事情。</p> 
+<p>&nbsp;</p> 
+<pre class="brush:java;">import org.aspectj.bridge.IMessageimport org.aspectj.bridge.MessageHandlerimport org.aspectj.tools.ajc.Main def ajc(String androidbootClassFiles,JavaCompile javaCompile){   String[] args = [-showWeaveInfo,                     -1.8, //1.8是为了兼容java 8。请根据自己java的版本合理设置它                     -inpath,javaCompile.destinationDir.toString(),                     -aspectpath,javaCompile.classpath.asPath,                     -d,javaCompile.destinationDir.toString(),                     -classpath,javaCompile.classpath.asPath,                    -bootclasspath, androidbootClassFiles]    MessageHandlerhandler = new MessageHandler(true);    new Main().run(args,handler)     deflog = project.logger    for(IMessage message : handler.getMessages(null, true)) {     switch (message.getKind()) {       case IMessage.ABORT:       case IMessage.ERROR:       case IMessage.FAIL:         log.error message.message, message.thrown         throw message.thrown         break;       case IMessage.WARNING:       case IMessage.INFO:         log.info message.message, message.thrown         break;       case IMessage.DEBUG:         log.debug message.message, message.thrown         break;      }    }  } 
+<br />&nbsp; 
+<br /> 
+<strong>5.2 总结</strong> 
+<p>除了hook之外,AspectJ还可以为目标类添加变量。另外,AspectJ也有抽象,继承等各种更高级的玩法。根据本文前面的介绍,这些高级玩法一定要靠需求来驱动。AspectJ肯定对原程序是有影响的,如若贸然使用高级用法,则可能带来一些未知的后果。关于这些内容,读者根据情况自行阅读文后所列的参考文献。</p> 
+<p>最后再来看一个图。</p> 
+<p>&nbsp;</p> 
+<p><img src="http://aliyunzixunbucket.oss-cn-beijing.aliyuncs.com/jpg/6175a260bbe7933a9e298c52f8d46191.jpg?x-oss-process=image/resize,p_100/auto-orient,1/quality,q_90/format,jpg/watermark,image_eXVuY2VzaGk=,t_100,g_se,x_0,y_0" alt="深入理解Android之AOP" /></p> 
+<p>图11 未使用AOP的情况</p> 
+<br /> 
+<p>图11中,左边是一个程序的三个基于OOP而划分的模块(也就是concern)。安全、业务逻辑、交易管理。这三个模块在设计图上一定是互相独立,互不干扰的。</p> 
+<p>但是在右图实现的时候,这三个模块就搅在一起了。这和我们在AndroidAopDemo中检查权限的例子中完全一样。在业务逻辑的时候,需要显示调用安全检查模块。</p> 
+<p>自从有了AOP,我们就可以去掉业务逻辑中显示调用安全检查的内容,使得代码归于干净,各个模块又能各司其职。而这之中千丝万缕的联系,都由AOP来连接和管理,岂不美哉?!</p> 
+<strong>5.3 参考文献</strong> 
+<p>[1] Manning.AspectJ.in.Action第二版</p> 
+<p>看书还是要挑简单易懂的,AOP概念并不复杂,而AspectJ也有很多书,但是真正写得通俗易懂的就是这本,虽然它本意是介绍Spring中的AOP,但对AspectJ的解释真得是非常到位,而且还有对@AspectJ注解的介绍。本文除第一个图外,其他参考用图全是来自于此书。</p> 
+<p>[2] http://fernandocejas.com/2014/08/03/aspect-oriented-programming-in-android/</p> 
+<p>Android中如何使用AspectJ,最重要的是它教会我们怎么使用aspectj编译工具API。</p> 
+<p>&nbsp;</p></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre>        </li>
+        <span>
+
+               以上是<a href="https://www.aliyun.com/jiaocheng/77059.html">深入理解Android之AOP</a>的内容，更多
+                              <a href="https://www.aliyun.com/jiaocheng/topic_1791.html"> </a>
+                              的内容，请您使用右上方搜索功能获取相关信息。
+
+        </span>
+
+        <li class="pagation">
+            <a href="https://www.aliyun.com/jiaocheng/77058.html" class="next">上一篇</a>
+            <a href="https://www.aliyun.com/jiaocheng/77057.html" class="one">1</a>
+            <a href="https://www.aliyun.com/jiaocheng/77056.html">2</a>
+            <a href="https://www.aliyun.com/jiaocheng/77062.html">3</a>
+            <a href="https://www.aliyun.com/jiaocheng/77061.html">4</a>
+            <a href="https://www.aliyun.com/jiaocheng/77060.html" class="next">下一篇</a>
+
+        </li>
+        <li class="p-search">
+            本文内容由互联网用户自发贡献自行上传，本网站不拥有所有权，未作人工编辑处理，也不承担相关法律责任。如果你发现本社区中有涉嫌抄袭的内容，欢迎发送邮件至：zixun-group@service.aliyun.com 进行举报，并提供相关证据，工作人员会在5个工作日内联系你，一经查实，本站将立刻删除涉嫌侵权内容。
+
+        </li>
+        <li class="relevant-article">
+            相关文章
+        </li>
+        <li id="flex">
+            <ul>
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/1470.html">解决AS 3.0 版本 style attribute &#39;@android:attr/windowEnterAnimation&#39; not found<a/></li>
+                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/1477.html">AS3.0：Cannot set the value of read-only property &#39;outputFile&#39;<a/></li>
+                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/2578.html">Picasso学习记录<a/></li>
+                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/2579.html">Android dp方式的屏幕适配工具使用(Android Studio插件方式)<a/></li>
+                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/2580.html">Android dp方式的屏幕适配工具使用(bat批处理方式)<a/></li>
+                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                
+            </ul>
+            <ul>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/2581.html">Android dp方式的屏幕适配工具使用(一些疑惑和注意事项)<a/></li>
+                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/2582.html">Android解析WindowManagerService（一）WMS的诞生<a/></li>
+                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/2583.html">Android基类封装之Fragment切换辅助类【原创】<a/></li>
+                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/2584.html">android showDividers属性和showAsAction属性<a/></li>
+                    
+                                                            <li><a href="https://www.aliyun.com/jiaocheng/2585.html">Android下使用TinyXml读取xml配置文件（Cocos2d-x游戏开发）<a/></li>
+                    
+                            </ul>
+        </li>
+    </ul>
+
+    <div class="div-right">
+        
+
+<!-- exported styles -->
+
+
+<link rel="stylesheet" type="text/css" href="//g.alicdn.com/ali-mod/??www-aliyun-common-adv-1/0.0.9/index.css"/>
+
+
+
+
+  
+      
+  <!--region -->
+            
+                
+                <div data-spm="980825" data-moduleid="0" data-name="www-aliyun-common-adv-1" data-guid="980825" id="guid-980825" data-scene-id="1345783" data-scene-version="0" data-hidden="" data-gitgroup="ali-mod" data-ext="" data-engine="tce" class="www-aliyun-common-adv-1 J_Module" tms="www-aliyun-common-adv-1/0.0.9" tms-datakey="tce/1345783"><div class="module-wrap J_tb_lazyload dbl_tms_module_wrap" style="text-align: center;">
+  <!-- 避免用window的全局变量获取数据 -->
+  <textarea class="schemaData" style="display:none;">
+    {"moduleinfo":{"ads_count":[{"count_phone":1,"count":1}],"align":"center"},"ads":[{"canClose":"manual","padding":"0px 0px 0px 0px","img":"https://img.alicdn.com/tfs/TB1YsFpxh9YBuNjy0FfXXXIsVXa-282-282.jpg","margin":"0px 0px 0px 0px","showClose":"true","background":"#000","link":"https://promotion.aliyun.com/ntms/act/mailbaokuan.html","width":"282","flowout":"false","autoCloseDelay":"5000","height":"282"}],"countinfo":{"ads":{"length_pc":0,"length":0}},"$tmsId":"tce/1345783"}
+  </textarea>
+  <div class="">
+  
+  <div class="add-bg" style="background: #000;">
+  <a style="width: 282; height: 282; margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px; " target="_blank" href="https://promotion.aliyun.com/ntms/act/mailbaokuan.html" class="adv-item">
+      <span  class="close"><i class="icon-wrong"></i></span>
+      <img src=https://img.alicdn.com/tfs/TB1YsFpxh9YBuNjy0FfXXXIsVXa-282-282.jpg>
+    </a>
+  </div>
+  
+  </div>
+</div>
+</div>
+            
+  <!--region -->
+      
+  
+
+<!-- exported scripts -->
+
+
+<script src="//g.alicdn.com/ali-mod/??www-aliyun-common-adv-1/0.0.9/index.js"></script>
+
+
+
+        <div class="contact-us">
+            <span>联系我们</span>
+            <p>
+                若你要投稿、删除文章请联系邮箱：</br>zixun-group@service.aliyun.com,工作人员会在五个工作日内给你回复。
+            </p>
+        </div>
+        <div class="reduce-article">
+            <p class="reduce-hr">
+                推荐文章
+            </p>
+
+            <ul>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/2290.html">android Timer TimerTask 启动与停止及常见无法停止问题解决<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/3018.html">Android WebView 加载H5页面空白问题<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/3772.html">Android Studio 3.0 https://maven.google.com问题<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/3839.html">Android上的自定义字体 - 通过XML进行动态字体选择<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/4103.html">AndroidBug5497Workaround 修改<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/4414.html">Android5.0 WebView中Http和Https混合问题<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/5045.html">在Andorid中使用FFmpeg实现MP4/AVI/H.264解析为BMP：RGB解析为BMP<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/5392.html">Retrofit源码模拟<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/5594.html">在 Android 中使用自定义函数接口替换 Frameworks 中的默认函数接口<a/></li>
+                                    <li><a href="https://www.aliyun.com/jiaocheng/5998.html">Error:CreateProcess error=216, 该版本的 %1 与您运行的 Windows 版本不<a/></li>
+                            </ul>
+
+        </div>
+
+        <p class="reduce-hr">
+            推荐产品
+        </p>
+        
+
+<!-- exported styles -->
+
+
+<link rel="stylesheet" type="text/css" href="//g.alicdn.com/ali-mod/??www-aliyun-yq-productsale1/0.0.6/index.css"/>
+
+
+
+
+  
+      
+  <!--region -->
+            
+                
+                <div data-spm="978852" data-moduleid="91233" data-name="www-aliyun-yq-productsale1" data-guid="978852" id="guid-978852" data-scene-id="1343561" data-scene-version="1" data-hidden="" data-gitgroup="ali-mod" data-ext="" data-engine="tce" class="www-aliyun-yq-productsale1 J_Module" tms="www-aliyun-yq-productsale1/0.0.6" tms-datakey="tce/1343561"><div class="module-wrap J_tb_lazyload">
+  <div class="single-product">
+       		<ul class="product">
+       		
+              <li class="product-icon">
+               <i class="product-icons-32 product-icons-emapreduce product-list-icon mr20"></i>
+              </li>
+              <li class="pdb16">
+              	<div class="product-titile">
+    	          	<span class="product-title-tip">E-MapReduce</span>
+    	          	
+              	</div>
+              </li>
+              <li class="pdb16 pdl">
+              	<span class="product-desc">基于 Hadoop/Spark 的大数据处理分析服务</span>
+              </li>
+              <li class="pdb20">
+              	<div class="product-price pdl">
+              	  
+              		  <span>&yen;0.708元/小时起</span>
+              		
+              		
+              	</div>
+              </li>
+              <li class="pdb20">
+                <div class="pdl">
+                  <a class="product-buy-btn" href="https://www.aliyun.com/product/emapreduce"> 立即购买 </a>
+                  
+                </div>
+              </li>
+              
+              <li class="product-icon">
+               <i class="product-icons-32 product-icons-ecs product-list-icon mr20"></i>
+              </li>
+              <li class="pdb16">
+              	<div class="product-titile">
+    	          	<span class="product-title-tip">云服务器 ECS</span>
+    	          	
+              	</div>
+              </li>
+              <li class="pdb16 pdl">
+              	<span class="product-desc">可弹性伸缩、安全稳定、简单易用</span>
+              </li>
+              <li class="pdb20">
+              	<div class="product-price pdl">
+              	  
+              		  <span>&yen;40.8元/月起</span>
+              		
+              		
+              	</div>
+              </li>
+              <li class="pdb20">
+                <div class="pdl">
+                  <a class="product-buy-btn" href="https://www.aliyun.com/product/ecs"> 立即购买 </a>
+                  
+                </div>
+              </li>
+              
+              <li class="product-icon">
+               <i class="product-icons-32 product-icons-sas product-list-icon mr20"></i>
+              </li>
+              <li class="pdb16">
+              	<div class="product-titile">
+    	          	<span class="product-title-tip">态势感知</span>
+    	          	
+              	</div>
+              </li>
+              <li class="pdb16 pdl">
+              	<span class="product-desc">预测未发生的攻击</span>
+              </li>
+              <li class="pdb20">
+              	<div class="product-price pdl">
+              	  
+              		  <span>&yen;24元/月起</span>
+              		
+              		
+              	</div>
+              </li>
+              <li class="pdb20">
+                <div class="pdl">
+                  <a class="product-buy-btn" href="https://www.aliyun.com/product/sas"> 立即购买 </a>
+                  
+                </div>
+              </li>
+              
+              <li class="product-icon">
+               <i class="product-icons-32 product-icons-ecs product-list-icon mr20"></i>
+              </li>
+              <li class="pdb16">
+              	<div class="product-titile">
+    	          	<span class="product-title-tip">邮箱低至5折</span>
+    	          	
+              	</div>
+              </li>
+              <li class="pdb16 pdl">
+              	<span class="product-desc">推荐购买再奖现金，最高25%</span>
+              </li>
+              <li class="pdb20">
+              	<div class="product-price pdl">
+              	  
+              		  <span>&yen;200元/3月起</span>
+              		
+              		
+              	</div>
+              </li>
+              <li class="pdb20">
+                <div class="pdl">
+                  <a class="product-buy-btn" href="https://promotion.aliyun.com/ntms/act/mailbaokuan.html"> 立即参与 </a>
+                  
+                </div>
+              </li>
+              
+       		</ul>
+
+    </div>
+</div>
+</div>
+            
+  <!--region -->
+      
+  
+
+<!-- exported scripts -->
+
+
+<script src="//g.alicdn.com/ali-mod/??www-aliyun-yq-productsale1/0.0.6/index.js"></script>
+
+
+
+        <div class="you-stile-like">
+
+                    <span>你可能还喜欢</span>
+
+                    <p id="p"> 
+                        <a href="https://www.aliyun.com/jiaocheng/topic_967.html">okhttp  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1041.html">implementation  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1054.html">管理  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1063.html">编写  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1106.html">Paint  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1207.html">AsyncTask  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1261.html">时候  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1268.html">tab  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1279.html">react  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1281.html">Menu  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1324.html">build  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1332.html">日常  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1352.html">ut  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1419.html">pi  </a>
+                    
+                        <a href="https://www.aliyun.com/jiaocheng/topic_1427.html">输入  </a>
+                                        </p>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="hot-active-content" data-spm="2">
+    
+
+<!-- exported styles -->
+
+
+<link rel="stylesheet" type="text/css" href="//g.alicdn.com/ali-mod/??wb-zc-dbl-response-hotact/0.0.9/index.css"/>
+
+
+
+
+  
+      
+  <!--region -->
+            
+                
+                <div data-spm="977962" data-moduleid="0" data-name="wb-zc-dbl-response-hotact" data-guid="977962" id="guid-977962" data-scene-id="1342675" data-scene-version="0" data-hidden="" data-gitgroup="ali-mod" data-ext="" data-engine="tce" class="wb-zc-dbl-response-hotact J_Module" tms="wb-zc-dbl-response-hotact/0.0.9" tms-datakey="tce/1342675">
+<div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
+  <!-- 避免用window的全局变量获取数据 -->
+  <textarea class="schemaData" style="display:none;">
+    {"moduleinfo":{"list_count":[{"count_phone":3,"count":3}],"link":"https://www.aliyun.com/activity#/promotionArea","title":"热门活动"},"list":[{"link":"https://promotion.aliyun.com/ntms/campus2017.html","icon":"https://img.alicdn.com/tfs/TB1QJGtQFXXXXaHXFXXXXXXXXXX-200-200.png","hicon":"https://img.alicdn.com/tfs/TB1auutQFXXXXaVXFXXXXXXXXXX-200-200.png","title":"学生专属优惠","desc":"云服务器<b style='color:#f60;'>9.9元/月</b>，大学必备"},{"link":"https://free.aliyun.com/","icon":"https://img.alicdn.com/tfs/TB10LOTQFXXXXXRXXXXXXXXXXXX-200-200.png","hicon":"https://img.alicdn.com/tfs/TB1BJCAQFXXXXb3XpXXXXXXXXXX-200-200.png","title":"阿里云免费套餐","desc":"40+产品  6个月免费"},{"link":"https://promotion.aliyun.com/ntms/act/qwbk.html","icon":"https://img.alicdn.com/tfs/TB1HkN_QFXXXXX6aXXXXXXXXXXX-200-200.png","hicon":"https://img.alicdn.com/tfs/TB14Px6QFXXXXa4aXXXXXXXXXXX-200-200.png","title":"服务器惊爆价30元/月","desc":"高质不高价，快速搭建应用"}],"countinfo":{"list":{"length_pc":0,"length":0}},"$tmsId":"tce/1342675"}
+  </textarea>
+  <div class="hotact-wrap">
+      <h3 >热门活动<a href="https://www.aliyun.com/activity#/promotionArea" target="_blank">更多&gt;</a></h3>
+      <div class="hotact-list">
+          
+                
+                <ul class="item-col3 y-clear">
+                
+                <li  ><a href="https://promotion.aliyun.com/ntms/campus2017.html" target="_blank">
+                    <p class="title" >学生专属优惠</p>
+                    <p class="desc" >云服务器<b style='color:#f60;'>9.9元/月</b>，大学必备</p>
+                    <p class="more">查看详情&gt;</p>
+                    <div class="imgs">
+                        <img src="https://img.alicdn.com/tfs/TB1QJGtQFXXXXaHXFXXXXXXXXXX-200-200.png" class="icon"><img src="https://img.alicdn.com/tfs/TB1auutQFXXXXaVXFXXXXXXXXXX-200-200.png" class="hicon">
+                    </div>
+                </a></li>
+                
+                <li  ><a href="https://free.aliyun.com/" target="_blank">
+                    <p class="title" >阿里云免费套餐</p>
+                    <p class="desc" >40+产品  6个月免费</p>
+                    <p class="more">查看详情&gt;</p>
+                    <div class="imgs">
+                        <img src="https://img.alicdn.com/tfs/TB10LOTQFXXXXXRXXXXXXXXXXXX-200-200.png" class="icon"><img src="https://img.alicdn.com/tfs/TB1BJCAQFXXXXb3XpXXXXXXXXXX-200-200.png" class="hicon">
+                    </div>
+                </a></li>
+                
+                <li class="mr0" ><a href="https://promotion.aliyun.com/ntms/act/qwbk.html" target="_blank">
+                    <p class="title" >服务器惊爆价30元/月</p>
+                    <p class="desc" >高质不高价，快速搭建应用</p>
+                    <p class="more">查看详情&gt;</p>
+                    <div class="imgs">
+                        <img src="https://img.alicdn.com/tfs/TB1HkN_QFXXXXX6aXXXXXXXXXXX-200-200.png" class="icon"><img src="https://img.alicdn.com/tfs/TB14Px6QFXXXXa4aXXXXXXXXXXX-200-200.png" class="hicon">
+                    </div>
+                </a></li>
+                
+                </ul>
+                
+          
+      </div>
+  </div>
+</div>
+</div>
+            
+  <!--region -->
+      
+  
+
+<!-- exported scripts -->
+
+
+<script src="//g.alicdn.com/ali-mod/??wb-zc-dbl-response-hotact/0.0.9/index.js"></script>
+
+
+
+</div>
+
+
+<div class="maybe" data-spm="3">
+    <div class="maybe-content-container">
+        <div class="maybe-p">
+            你可能感兴趣
+        </div>
+        <div class="maybe-ul-container">
+            <ul>
+                
+                                                                             <li><a target="_blank" href="//www.aliyun.com/ss/5aeU5omY6YeH6LSt5Y2P6K6u"  style="margin-right:10px;">委托采购协议</a></li>
+                                                                                                             <li><a target="_blank" href="//www.aliyun.com/ss/ajJlZeaMgeS5heWxgg"  style="margin-right:10px;">j2ee持久层</a></li>
+                                                                                                             <li><a target="_blank" href="//yq.aliyun.com/wenzhang/tag/tagid_8174"  style="margin-right:10px;">云桌面</a></li>
+                                                                                                             <li><a target="_blank" href="//www.aliyun.com/ss/5Z-O6ZWH5bGF5rCR56S-5Lya5YW76ICB"  style="margin-right:10px;">城镇居民社会养老</a></li>
+                                                                                                             <li><a target="_blank" href="//yq.aliyun.com/product/80"  style="margin-right:10px;">网站构建</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                
+            </ul>
+            <ul>
+                
+                                                                                                                                                                                                                                                                                                                                                        <li><a target="_blank" href="//yq.aliyun.com/wenzhang/tag/tagid_20748"  style="margin-right:10px;">settimeo</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/6Zi_6YeM5LqR6YKu566x5Liq5Lq654mI"  style="margin-right:10px;">阿里云邮箱个人版</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5LiH572R5aSH"  style="margin-right:10px;">万网备</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5oqE5bqV56eN5a2Q"  style="margin-right:10px;">抄底种子</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5b6hc29zbw"  style="margin-right:10px;">御soso</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                
+            </ul>
+            <ul>
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <li><a target="_blank" href="//yq.aliyun.com/wenzhang/tag/tagid_3292"  style="margin-right:10px;">并发访问</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5Lyg5aWH5Z-O5oiY"  style="margin-right:10px;">传奇城战</a></li>
+                                                                                                                <li><a target="_blank" href="//yq.aliyun.com/wenzhang/tag/tagid_32196"  style="margin-right:10px;">代码前端git</a></li>
+                                                                                                                <li><a target="_blank" href="//yq.aliyun.com/product/613"  style="margin-right:10px;">小咖秀架构</a></li>
+                                                                                                                <li><a target="_blank" href="//yq.aliyun.com/wenzhang/tag/tagid_22202"  style="margin-right:10px;">soaplib</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                
+            </ul>
+            <ul>
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5Lit5L-h6ZO26KGM6L2m6LS35Lia5Yqh5Yip546H"  style="margin-right:10px;">中信银行车贷业务</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/d3d3Li5uZXQ"  style="margin-right:10px;">www..net</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/6ZmM6ZmMMueUteW9sQ"  style="margin-right:10px;">陌陌2电影</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/s/5Z-f5ZCN566h55CG"  style="margin-right:10px;">域名管理</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/6ams5LqR6I-c6bif54mp5rWB5ryU6K6y"  style="margin-right:10px;">马云菜鸟物流演讲</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                
+            </ul>
+            <ul>
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li><a target="_blank" href="//www.aliyun.com/ss/5pyA5by66Ziy5q-S6L2v5Lu2"  style="margin-right:10px;">最强防毒软件</a></li>
+                                                                                                                <li><a target="_blank" href="//yq.aliyun.com/product/197"  style="margin-right:10px;">淘宝迁云架构</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5pa955Om6L6b5qC86IW_5Lyk"  style="margin-right:10px;">施瓦辛格腿伤</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5bi46Z2S6Jek5LmL5oGL"  style="margin-right:10px;">常青藤之恋</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/Z2lzIOaVsOaNruWtmOWCqA"  style="margin-right:10px;">gis 数据存储</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                
+            </ul>
+            <ul>
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <li><a target="_blank" href="//yq.aliyun.com/wenzhang/tag/tagid_13923"  style="margin-right:10px;">权电阻网络</a></li>
+                                                                                                                <li><a target="_blank" href="//yq.aliyun.com/wenzhang/tag/tagid_15739"  style="margin-right:10px;">与activit</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/MzYw56Gs55uY"  style="margin-right:10px;">360硬盘</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5rG96L2m6KGM5Lia54mp5rWB"  style="margin-right:10px;">汽车行业物流</a></li>
+                                                                                                                <li><a target="_blank" href="//www.aliyun.com/ss/5bCP6K-05LiL6L29dHh055S15a2Q5Lmm5YWN6LS55LiL6L295YWo5pys"  style="margin-right:10px;">小说下载txt电</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="maybe-p-right">
+        <p>
+        阿里云教程中心为您免费提供  深入理解Android之AOP相关信息，包括
+                    <a href="https://www.aliyun.com/jiaocheng/topic_1791.html"></a> &nbsp;
+                的信息，所有深入理解Android之AOP相关内容均不代表阿里云的意见！投稿删除文章请联系邮箱：<br>zixun-group@service.aliyun.com，工作人员会在五个工作日内答复
+        </p>
+        <span>移动版： <a href="https://m.aliyun.com/jiaocheng/77059.html"> 深入理解Android之AOP</a></span>
+    </div>
+
+</div>
+
+
+
+<!-- exported styles -->
+
+
+<link rel="stylesheet" type="text/css" href="//g.alicdn.com/ali-mod/??www-aliyun-common-allinone/0.0.1/index.css,aliyun-common-footer-2017/0.0.83/index.css"/>
+
+
+
+
+  
+      
+  <!--region -->
+            
+                
+                <div data-spm="1058222" data-moduleid="176654" data-name="www-aliyun-common-allinone" data-guid="1058222" id="guid-1058222" data-scene-id="1482797" data-scene-version="0" data-hidden="" data-gitgroup="ali-mod" data-ext="" data-engine="tce" class="www-aliyun-common-allinone J_Module" tms="www-aliyun-common-allinone/0.0.1" tms-datakey="tce/1482797"><div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
+  <!-- 避免用window的全局变量获取数据 -->
+  <textarea class="schemaData" style="display:none;">
+    {"moduleinfo":{"javascripts_count":[{"count_phone":0,"count":0}],"styles_count":[{"count_phone":0,"count":0}],"htmls_count":[{"count_phone":1,"count":1}]},"htmls":[{"text":"<script type=\"text/javascript\" src=\"//g.alicdn.com/??aliyun/www-products/0.4.8/knight/js/footer/pinyou.js,aliyun/www-products/0.5.3/knight/js/footer/partner.js\"></script>"}],"styles":[],"javascripts":[],"countinfo":{"javascripts":{},"htmls":{"length_pc":0,"length":0},"styles":{}},"$tmsId":"tce/1482797"}
+  </textarea>
+  
+  
+    <script type="text/javascript" src="//g.alicdn.com/??aliyun/www-products/0.4.8/knight/js/footer/pinyou.js,aliyun/www-products/0.5.3/knight/js/footer/partner.js"></script>
+  
+  
+</div>
+</div>
+            
+  <!--region -->
+      
+  
+      
+  <!--region -->
+            
+                
+                <div data-spm="631162" data-moduleid="199757" data-name="aliyun-common-footer-2017" data-guid="631162" id="guid-631162" data-scene-id="753070" data-scene-version="9" data-hidden="" data-gitgroup="ali-mod" data-ext="" data-engine="tce" class="aliyun-common-footer-2017 J_Module" tms="aliyun-common-footer-2017/0.0.83" tms-datakey="tce/753070">
+
+<div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
+  <!-- 避免用window的全局变量获取数据 -->
+  <textarea class="schemaData" style="display:none;">
+    {"moduleinfo":{"link95187_count":[{"count_phone":1,"count":1}],"inter_count":[{"count_phone":4,"count":4}],"keys_count":[{"count_phone":3,"count":3}],"xiaoyun_count":[{"count_phone":0,"count":0}],"qrcode_count":[{"count_phone":5,"count":5}]},"link95187":[{"p":"95187转1","imgW":"https://img.alicdn.com/tps/TB14DpcPXXXXXaIXpXXXXXXXXXX-100-82.png","imgG":"https://img.alicdn.com/tps/TB14DpcPXXXXXaIXpXXXXXXXXXX-100-82.png","h1":"售前咨询热线","links":[{"tce_rule_count":"1","link":"https://www.aliyun.com/support/95187","text":"专业技术咨询"},{"tce_rule_count":"1","link":"https://www.aliyun.com/support/95187","text":"全方位产品解读"},{"tce_rule_count":"1","link":"https://www.aliyun.com/solution/all","text":"成熟解决方案"},{"tce_rule_count":"1","link":"https://www.aliyun.com/solution/all","text":"成功客户案例分享"}],"imgB":"https://img.alicdn.com/tps/TB1_I0aPXXXXXajXpXXXXXXXXXX-100-82.png"}],"xiaoyun":[],"inter":[{"links":[{"tce_rule_count":"1","link":"https://www.aliyun.com/contact","text":"联系我们"},{"tce_rule_count":"1","link":"https://www.aliyun.com/support/supportplans","text":"支持计划"},{"tce_rule_count":"1","link":"https://help.aliyun.com/index.html?content=school","text":"新手学堂"},{"tce_rule_count":"1","link":"https://help.aliyun.com/index.html?content=tools","text":"自助工具"},{"tce_rule_count":"1","link":"https://www.aliyun.com/service/list","text":"咨询与设计"},{"tce_rule_count":"1","link":"https://www.aliyun.com/service/list#f2","text":"实施与搭建"},{"tce_rule_count":"1","link":"https://www.aliyun.com/service/list#f3","text":"运维与管理"},{"tce_rule_count":"1","link":"https://www.aliyun.com/service/list#f4","text":"优化与提升"},{"tce_rule_count":"1","link":"https://help.aliyun.com/noticelist.html","text":"公告"},{"tce_rule_count":"1","link":"https://connect.aliyun.com/","text":"提交建议"}],"title":"支持与服务"},{"links":[{"tce_rule_count":"1","link":"https://home.console.aliyun.com/new#/","text":"管理控制台"},{"tce_rule_count":"1","link":"https://bsn.console.aliyun.com/?#/bsnApply/ecs","text":"备案管理"},{"tce_rule_count":"1","link":"https://netcn.console.aliyun.com/core/domain/list","text":"域名控制台"},{"tce_rule_count":"1","link":"https://netcn.console.aliyun.com/core/host/list2","text":"万网主机控制面板"},{"tce_rule_count":"1","link":"https://account.console.aliyun.com/?spm=5176.8142029.388261.1044.2c3b381fKZBdi5#/secure","text":"账号管理"},{"tce_rule_count":"1","link":"https://expense.console.aliyun.com/?#/account/recharge/alipay","text":"充值付款"},{"tce_rule_count":"1","link":"https://help.aliyun.com/knowledge_detail/37108.html","text":"线下汇款 / 电汇"},{"tce_rule_count":"1","link":"https://help.aliyun.com/knowledge_detail/37079.html","text":"合同申请"},{"tce_rule_count":"1","link":"https://help.aliyun.com/knowledge_detail/37053.html","text":"索取发票"},{"tce_rule_count":"1","link":"https://security.aliyun.com/compliance","text":"合规性"}],"title":"账户管理"},{"links":[{"link":"https://whois.aliyun.com/","text":"域名信息查询（WHOIS）"},{"link":"https://www.aliyun.com/price","text":"定价"},{"link":"https://www.aliyun.com/product/new","text":"云产品快报"},{"link":"https://www.aliyun.com/chinaglobal/home","text":"海外上云"},{"link":"https://www.aliyun.com/solution/customer","text":"客户案例"},{"link":"https://www.aliyun.com/analyst-reports/","text":"分析师报告"},{"link":"https://www.aliyun.com/support/sqfwzx","text":"阿里云授权服务中心"},{"link":"https://greencode.aliyun.com/","text":"码上公益"},{"link":"https://report.aliyun.com/","text":"举报中心"},{"link":"https://security.aliyun.com/trust","text":"信任中心"}],"title":"快速入口"},{"links":[{"tce_rule_count":"1","link":"https://help.aliyun.com/","text":"帮助文档"},{"tce_rule_count":"1","link":"https://developer.aliyun.com/index","text":"开发者中心"},{"tce_rule_count":"1","link":"https://edu.aliyun.com/developer","text":"开发者课堂"},{"tce_rule_count":"1","link":"https://edu.aliyun.com/certification","text":"考试认证"},{"tce_rule_count":"1","link":"https://edu.aliyun.com/lab/","text":"开放实验室"},{"tce_rule_count":"1","link":"https://edu.aliyun.com/","text":"阿里云大学"},{"tce_rule_count":"1","link":"https://yq.aliyun.com/cloud","text":"阿里云头条"},{"tce_rule_count":"1","link":"https://yq.aliyun.com","text":"社区"},{"tce_rule_count":"1","link":"https://yq.aliyun.com/articles","text":"博客"},{"tce_rule_count":"1","link":"https://yq.aliyun.com/ask","text":"问答"}],"title":"资源和社区"}],"qrcode":[{"qrcode":"https://img.alicdn.com/tfs/TB19l4NQpXXXXXnXpXXXXXXXXXX-80-80.png","link":"javascript:;","text":"企业决策必读"},{"qrcode":"https://img.alicdn.com/tps/TB197yLLpXXXXciXpXXXXXXXXXX-300-300.png","link":"https://promotion.aliyun.com/ntms/mobile.html","text":"阿里云APP"},{"qrcode":"//img.alicdn.com/tps/TB12GsJLXXXXXcWXpXXXXXXXXXX-84-84.png","link":"javascript:;","text":"阿里云微信"},{"qrcode":"//img.alicdn.com/tps/TB1zE3rLXXXXXXsaXXXXXXXXXXX-84-84.png","link":"http://weibo.com/aliyun?sudaref=www.aliyun.com","text":"阿里云微博"},{"qrcode":"https://img.alicdn.com/tfs/TB1QAo5SFXXXXcvXXXXXXXXXXXX-256-256.png","link":"https://weibo.com/p/1006062935804003/home","text":"阿里云客户满意中心"}],"keys":[{"title":"热门产品","keyList":[{"tce_rule_count":"1","link":"https://free.aliyun.com/","title2":"免费套餐","text":"免费套餐"},{"tce_rule_count":"1","link":"https://www.aliyun.com/product/rds","title2":"云数据库RDS","text":"云数据库RDS"},{"tce_rule_count":"1","link":"https://www.aliyun.com/product/oss","title2":"云存储OSS","text":"云存储OSS"},{"tce_rule_count":"1","link":"https://www.aliyun.com/product/nat","title2":"NAT配置","text":"NAT网关"},{"tce_rule_count":"1","link":"https://www.aliyun.com/product/slb","title2":"负载均衡","text":"负载均衡"},{"tce_rule_count":"1","link":"https://wanwang.aliyun.com/","title2":"网站域名注册","text":"域名注册"},{"tce_rule_count":"1","link":"https://market.aliyun.com/jianzhan","title2":"网站建设","text":"网站建设"},{"tce_rule_count":"1","link":"https://data.aliyun.com/","title2":"数加大数据","text":"大数据"},{"tce_rule_count":"1","link":"https://www.aliyun.com/","title2":"云计算","text":"云计算"}]},{"title":"用户热搜","keyList":[{"tce_rule_count":"1","link":"https://beian.aliyun.com/","title2":"ICP备案","text":"网站备案"},{"tce_rule_count":"1","link":"https://market.aliyun.com/wanganfa","title2":"网络安全法解读","text":"网安法"},{"tce_rule_count":"1","link":"https://www.aliyun.com/product/cdn","title2":"网站cdn加速","text":"CDN加速"},{"tce_rule_count":"1","link":"https://www.aliyun.com/product/apigateway","title2":"API网关","text":"API网关"},{"tce_rule_count":"1","link":"https://qiye.aliyun.com/","title2":"企业邮箱","text":"企业邮箱"},{"tce_rule_count":"1","link":"https://whois.aliyun.com/","title2":"whois查询","text":"whois查询"},{"tce_rule_count":"1","link":"https://www.aliyun.com/product/live","title2":"视频直播解决方案","text":"视频直播"},{"tce_rule_count":"1","link":"https://www.aliyun.com/product/vod","title2":"视频点播","text":"视频转码"},{"tce_rule_count":"1","link":"https://market.aliyun.com/security","title2":"云安全","text":"云安全"}]},{"title":"更多推荐","keyList":[{"tce_rule_count":"1","link":"https://tianchi.aliyun.com/","title2":"数据算法竞赛","text":"数据科研社区"},{"tce_rule_count":"1","link":"https://edu.aliyun.com/","title2":"阿里云大学","text":"阿里云大学"},{"tce_rule_count":"1","link":"https://promotion.aliyun.com/ntms/campus2017.html","title2":"云翼计划","text":"学生机"},{"tce_rule_count":"1","link":"https://bbs.aliyun.com/","title2":"开发者论坛","text":"IT论坛"},{"tce_rule_count":"1","link":"https://data.aliyun.com/visual/datav","title2":"Datav数据可视化","text":"数据可视化"},{"tce_rule_count":"1","link":"https://wanwang.aliyun.com/hosting/","title2":"云虚拟主机","text":"云虚机"},{"tce_rule_count":"1","link":"https://wanwang.aliyun.com/domain/com/","title2":".com域名","text":"com域名"},{"tce_rule_count":"1","link":"https://wanwang.aliyun.com/domain/cn/","title2":".cn域名","text":"cn域名"},{"tce_rule_count":"1","link":"https://www.aliyun.com/solution/security/compliance","title2":"等保合规安全解决方案","text":"合规安全解决方案"}]}],"countinfo":{"link95187":{"length_pc":0,"length":0},"xiaoyun":{},"qrcode":{"length_pc":0,"length":0},"keys":{"length_pc":0,"length":0},"inter":{"length_pc":0,"length":0}},"$tmsId":"tce/753070"}
+  </textarea>
+
+  <div  id="J_homePageRegister" style="display:none;">
+    <div  data-spm-click="gostr=/aliyun;locaid=tongdizhuce" class="y-align-center home-page-register">
+      <a target="_blank" href="//account.aliyun.com/register/register.htm" class="register-btn">立即注册，享免费套餐</a>
+      <div class="register-background" 
+         data-image="https://img.alicdn.com/tps/TB1X5DsLXXXXXcsXpXXXXXXXXXX-1440-590.svg">
+    </div>
+  </div>
+    
+  </div>
+
+  <div class="small-footer aliyun-common-footer-small ">
+
+    <div class="ali-main-time" style="display: none;">
+      <ul class="ali-main-time-content y-row">
+        <li style="width: 27.3%;"><a rel="nofollow" href="//www.aliyun.com/support/jpfw#gold-tab-05" target="_blank" data-spm-click="gostr=/aliyun;locaid=a112">
+                <span>
+                  <img class="white" src="//img.alicdn.com/tps/TB1t1u8LXXXXXXpaXXXXXXXXXXX-100-100.png">
+                  <img class="black" src="//img.alicdn.com/tps/TB1Sj6bLXXXXXXPXVXXXXXXXXXX-100-100.png">
+                </span>
+          <span class="ali-main-time-what">100倍故障时长赔偿</span>
+        </a>
+        </li>
+        <li style="width: 27.3%;"><a rel="nofollow" href="//www.aliyun.com/support/jpfw#gold-tab-06" target="_blank" data-spm-click="gostr=/aliyun;locaid=a113">
+                <span>
+                  <img class="white" src="//img.alicdn.com/tps/TB1Jvy7LXXXXXXoaXXXXXXXXXXX-100-100.png">
+                  <img class="black" src="//img.alicdn.com/tps/TB1CZ15LXXXXXbHaXXXXXXXXXXX-100-100.png">
+                </span>
+          <span class="ali-main-time-what">7×24小时售后支持</span>
+        </a>
+        </li>
+        <li style="width: 27.3%;"><a rel="nofollow" href="//www.aliyun.com/support/jpfw#gold-tab-03" target="_blank" data-spm-click="gostr=/aliyun;locaid=a114">
+                <span>
+                  <img class="white" src="//img.alicdn.com/tps/TB17_ThLXXXXXb9XpXXXXXXXXXX-100-100.png">
+                  <img class="black" src="//img.alicdn.com/tps/TB14aHiLXXXXXcZXpXXXXXXXXXX-100-100.png">
+                </span>
+          <span class="ali-main-time-what">5天无理由退款</span>
+        </a>
+        </li>
+        <li  style="width: 17%;"><a rel="nofollow" href="//www.aliyun.com/support/jpfw#gold-tab-05" target="_blank" data-spm-click="gostr=/aliyun;locaid=a115">
+                <span>
+                  <img class="white" src="//img.alicdn.com/tps/TB13HuYLXXXXXanapXXXXXXXXXX-100-100.png">
+                  <img class="black" src="//img.alicdn.com/tps/TB1FJm0LXXXXXaVapXXXXXXXXXX-100-100.png">
+                </span>
+          <span class="ali-main-time-what">备案用时多久送多久</span>
+        </a>
+        </li>
+      </ul>
+    </div>
+
+
+    <div class="ali-main-know">
+      <div class="y-row">
+        <div class="phone-cell">
+          <div>
+            <img class="black" src="https://img.alicdn.com/tps/TB1_I0aPXXXXXajXpXXXXXXXXXX-100-82.png">
+            <img class="white" src="https://img.alicdn.com/tps/TB14DpcPXXXXXaIXpXXXXXXXXXX-100-82.png">
+            <img class="white-black" src="https://img.alicdn.com/tps/TB14DpcPXXXXXaIXpXXXXXXXXXX-100-82.png">
+            <h2>售前咨询热线</h2>
+
+            <h1>95187转1</h1>
+            <ul>
+              
+              <li><a href="https://www.aliyun.com/support/95187" target="_blank" rel="nofollow">专业技术咨询</a></li>
+              
+              <li><a href="https://www.aliyun.com/support/95187" target="_blank" rel="nofollow">全方位产品解读</a></li>
+              
+              <li><a href="https://www.aliyun.com/solution/all" target="_blank" rel="nofollow">成熟解决方案</a></li>
+              
+              <li><a href="https://www.aliyun.com/solution/all" target="_blank" rel="nofollow">成功客户案例分享</a></li>
+              
+            </ul>
+          </div>
+        </div>
+
+        <ul class="ali-main-know-content y-clear">
+          
+          <li>
+            <h3 class="ali-main-know-title">支持与服务</h3>
+            <ul class="ali-main-know-subcontent">
+              
+              <li><a title="联系我们" target="_blank" href="https://www.aliyun.com/contact" >联系我们</a></li>
+              
+              <li><a title="支持计划" target="_blank" href="https://www.aliyun.com/support/supportplans" >支持计划</a></li>
+              
+              <li><a title="新手学堂" target="_blank" href="https://help.aliyun.com/index.html?content=school" >新手学堂</a></li>
+              
+              <li><a title="自助工具" target="_blank" href="https://help.aliyun.com/index.html?content=tools" >自助工具</a></li>
+              
+              <li><a title="咨询与设计" target="_blank" href="https://www.aliyun.com/service/list" >咨询与设计</a></li>
+              
+              <li><a title="实施与搭建" target="_blank" href="https://www.aliyun.com/service/list#f2" >实施与搭建</a></li>
+              
+              <li><a title="运维与管理" target="_blank" href="https://www.aliyun.com/service/list#f3" >运维与管理</a></li>
+              
+              <li><a title="优化与提升" target="_blank" href="https://www.aliyun.com/service/list#f4" >优化与提升</a></li>
+              
+              <li><a title="公告" target="_blank" href="https://help.aliyun.com/noticelist.html" >公告</a></li>
+              
+              <li><a title="提交建议" target="_blank" href="https://connect.aliyun.com/" >提交建议</a></li>
+              
+            </ul>
+          </li>
+          
+          <li>
+            <h3 class="ali-main-know-title">账户管理</h3>
+            <ul class="ali-main-know-subcontent">
+              
+              <li><a title="管理控制台" target="_blank" href="https://home.console.aliyun.com/new#/" >管理控制台</a></li>
+              
+              <li><a title="备案管理" target="_blank" href="https://bsn.console.aliyun.com/?#/bsnApply/ecs" >备案管理</a></li>
+              
+              <li><a title="域名控制台" target="_blank" href="https://netcn.console.aliyun.com/core/domain/list" >域名控制台</a></li>
+              
+              <li><a title="万网主机控制面板" target="_blank" href="https://netcn.console.aliyun.com/core/host/list2" >万网主机控制面板</a></li>
+              
+              <li><a title="账号管理" target="_blank" href="https://account.console.aliyun.com/?spm=5176.8142029.388261.1044.2c3b381fKZBdi5#/secure" >账号管理</a></li>
+              
+              <li><a title="充值付款" target="_blank" href="https://expense.console.aliyun.com/?#/account/recharge/alipay" >充值付款</a></li>
+              
+              <li><a title="线下汇款 / 电汇" target="_blank" href="https://help.aliyun.com/knowledge_detail/37108.html" >线下汇款 / 电汇</a></li>
+              
+              <li><a title="合同申请" target="_blank" href="https://help.aliyun.com/knowledge_detail/37079.html" >合同申请</a></li>
+              
+              <li><a title="索取发票" target="_blank" href="https://help.aliyun.com/knowledge_detail/37053.html" >索取发票</a></li>
+              
+              <li><a title="合规性" target="_blank" href="https://security.aliyun.com/compliance" >合规性</a></li>
+              
+            </ul>
+          </li>
+          
+          <li>
+            <h3 class="ali-main-know-title">快速入口</h3>
+            <ul class="ali-main-know-subcontent">
+              
+              <li><a title="域名信息查询（WHOIS）" target="_blank" href="https://whois.aliyun.com/" >域名信息查询（WHOIS）</a></li>
+              
+              <li><a title="定价" target="_blank" href="https://www.aliyun.com/price" >定价</a></li>
+              
+              <li><a title="云产品快报" target="_blank" href="https://www.aliyun.com/product/new" >云产品快报</a></li>
+              
+              <li><a title="海外上云" target="_blank" href="https://www.aliyun.com/chinaglobal/home" >海外上云</a></li>
+              
+              <li><a title="客户案例" target="_blank" href="https://www.aliyun.com/solution/customer" >客户案例</a></li>
+              
+              <li><a title="分析师报告" target="_blank" href="https://www.aliyun.com/analyst-reports/" >分析师报告</a></li>
+              
+              <li><a title="阿里云授权服务中心" target="_blank" href="https://www.aliyun.com/support/sqfwzx" >阿里云授权服务中心</a></li>
+              
+              <li><a title="码上公益" target="_blank" href="https://greencode.aliyun.com/" >码上公益</a></li>
+              
+              <li><a title="举报中心" target="_blank" href="https://report.aliyun.com/" >举报中心</a></li>
+              
+              <li><a title="信任中心" target="_blank" href="https://security.aliyun.com/trust" >信任中心</a></li>
+              
+            </ul>
+          </li>
+          
+          <li>
+            <h3 class="ali-main-know-title">资源和社区</h3>
+            <ul class="ali-main-know-subcontent">
+              
+              <li><a title="帮助文档" target="_blank" href="https://help.aliyun.com/" >帮助文档</a></li>
+              
+              <li><a title="开发者中心" target="_blank" href="https://developer.aliyun.com/index" >开发者中心</a></li>
+              
+              <li><a title="开发者课堂" target="_blank" href="https://edu.aliyun.com/developer" >开发者课堂</a></li>
+              
+              <li><a title="考试认证" target="_blank" href="https://edu.aliyun.com/certification" >考试认证</a></li>
+              
+              <li><a title="开放实验室" target="_blank" href="https://edu.aliyun.com/lab/" >开放实验室</a></li>
+              
+              <li><a title="阿里云大学" target="_blank" href="https://edu.aliyun.com/" >阿里云大学</a></li>
+              
+              <li><a title="阿里云头条" target="_blank" href="https://yq.aliyun.com/cloud" >阿里云头条</a></li>
+              
+              <li><a title="社区" target="_blank" href="https://yq.aliyun.com" >社区</a></li>
+              
+              <li><a title="博客" target="_blank" href="https://yq.aliyun.com/articles" >博客</a></li>
+              
+              <li><a title="问答" target="_blank" href="https://yq.aliyun.com/ask" >问答</a></li>
+              
+            </ul>
+          </li>
+          
+          <li style="width: 12%;">
+            <h3 class="ali-main-know-title">关注阿里云</h3>
+            <ul class="ali-main-know-subcontent">
+              
+              <li class="ali-main-know-cell qr-code">
+                <a href="javascript:;" target="_blank" data-spm-click="gostr=/aliyun;locaid=a123p"  rel="nofollow">企业决策必读</a>
+                <img class="ali-main-know-cell-qr" style="display: block ;" src="https://img.alicdn.com/tfs/TB19l4NQpXXXXXnXpXXXXXXXXXX-80-80.png">
+              </li>
+              
+              <li class="ali-main-know-cell qr-code">
+                <a href="https://promotion.aliyun.com/ntms/mobile.html" target="_blank" data-spm-click="gostr=/aliyun;locaid=a123p"  rel="nofollow">阿里云APP</a>
+                <img class="ali-main-know-cell-qr" style="display:  none;" src="https://img.alicdn.com/tps/TB197yLLpXXXXciXpXXXXXXXXXX-300-300.png">
+              </li>
+              
+              <li class="ali-main-know-cell qr-code">
+                <a href="javascript:;" target="_blank" data-spm-click="gostr=/aliyun;locaid=a123p"  rel="nofollow">阿里云微信</a>
+                <img class="ali-main-know-cell-qr" style="display:  none;" src="//img.alicdn.com/tps/TB12GsJLXXXXXcWXpXXXXXXXXXX-84-84.png">
+              </li>
+              
+              <li class="ali-main-know-cell qr-code">
+                <a href="http://weibo.com/aliyun?sudaref=www.aliyun.com" target="_blank" data-spm-click="gostr=/aliyun;locaid=a123p"  rel="nofollow">阿里云微博</a>
+                <img class="ali-main-know-cell-qr" style="display:  none;" src="//img.alicdn.com/tps/TB1zE3rLXXXXXXsaXXXXXXXXXXX-84-84.png">
+              </li>
+              
+              <li class="ali-main-know-cell qr-code">
+                <a href="https://weibo.com/p/1006062935804003/home" target="_blank" data-spm-click="gostr=/aliyun;locaid=a123p"  rel="nofollow">阿里云客户满意中心</a>
+                <img class="ali-main-know-cell-qr" style="display:  none;" src="https://img.alicdn.com/tfs/TB1QAo5SFXXXXcvXXXXXXXXXXXX-256-256.png">
+              </li>
+              
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+
+    <div class="ali-main-hot">
+      <div class="y-row">
+        <ul class="ali-main-hot-content">
+          
+          <li>
+            <h3 class="ali-main-hot-title">热门产品</h3>
+            <ul class="ali-main-hot-subcontent y-clear">
+              
+              <li > <a href="https://free.aliyun.com/" target="_blank" title="免费套餐">免费套餐</a></li>
+              
+              <li > <a href="https://www.aliyun.com/product/rds" target="_blank" title="云数据库RDS">云数据库RDS</a></li>
+              
+              <li > <a href="https://www.aliyun.com/product/oss" target="_blank" title="云存储OSS">云存储OSS</a></li>
+              
+              <li > <a href="https://www.aliyun.com/product/nat" target="_blank" title="NAT配置">NAT网关</a></li>
+              
+              <li > <a href="https://www.aliyun.com/product/slb" target="_blank" title="负载均衡">负载均衡</a></li>
+              
+              <li > <a href="https://wanwang.aliyun.com/" target="_blank" title="网站域名注册">域名注册</a></li>
+              
+              <li > <a href="https://market.aliyun.com/jianzhan" target="_blank" title="网站建设">网站建设</a></li>
+              
+              <li > <a href="https://data.aliyun.com/" target="_blank" title="数加大数据">大数据</a></li>
+              
+              <li > <a href="https://www.aliyun.com/" target="_blank" title="云计算">云计算</a></li>
+              
+            </ul>
+          </li>
+          
+          <li>
+            <h3 class="ali-main-hot-title">用户热搜</h3>
+            <ul class="ali-main-hot-subcontent y-clear">
+              
+              <li > <a href="https://beian.aliyun.com/" target="_blank" title="ICP备案">网站备案</a></li>
+              
+              <li > <a href="https://market.aliyun.com/wanganfa" target="_blank" title="网络安全法解读">网安法</a></li>
+              
+              <li > <a href="https://www.aliyun.com/product/cdn" target="_blank" title="网站cdn加速">CDN加速</a></li>
+              
+              <li > <a href="https://www.aliyun.com/product/apigateway" target="_blank" title="API网关">API网关</a></li>
+              
+              <li > <a href="https://qiye.aliyun.com/" target="_blank" title="企业邮箱">企业邮箱</a></li>
+              
+              <li > <a href="https://whois.aliyun.com/" target="_blank" title="whois查询">whois查询</a></li>
+              
+              <li > <a href="https://www.aliyun.com/product/live" target="_blank" title="视频直播解决方案">视频直播</a></li>
+              
+              <li > <a href="https://www.aliyun.com/product/vod" target="_blank" title="视频点播">视频转码</a></li>
+              
+              <li > <a href="https://market.aliyun.com/security" target="_blank" title="云安全">云安全</a></li>
+              
+            </ul>
+          </li>
+          
+          <li>
+            <h3 class="ali-main-hot-title">更多推荐</h3>
+            <ul class="ali-main-hot-subcontent y-clear">
+              
+              <li > <a href="https://tianchi.aliyun.com/" target="_blank" title="数据算法竞赛">数据科研社区</a></li>
+              
+              <li > <a href="https://edu.aliyun.com/" target="_blank" title="阿里云大学">阿里云大学</a></li>
+              
+              <li > <a href="https://promotion.aliyun.com/ntms/campus2017.html" target="_blank" title="云翼计划">学生机</a></li>
+              
+              <li > <a href="https://bbs.aliyun.com/" target="_blank" title="开发者论坛">IT论坛</a></li>
+              
+              <li > <a href="https://data.aliyun.com/visual/datav" target="_blank" title="Datav数据可视化">数据可视化</a></li>
+              
+              <li > <a href="https://wanwang.aliyun.com/hosting/" target="_blank" title="云虚拟主机">云虚机</a></li>
+              
+              <li > <a href="https://wanwang.aliyun.com/domain/com/" target="_blank" title=".com域名">com域名</a></li>
+              
+              <li > <a href="https://wanwang.aliyun.com/domain/cn/" target="_blank" title=".cn域名">cn域名</a></li>
+              
+              <li > <a href="https://www.aliyun.com/solution/security/compliance" target="_blank" title="等保合规安全解决方案">合规安全解决方案</a></li>
+              
+            </ul>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="ali-copyright-100">
+      <div class="y-row copyright">
+        <p class="big" style="display: inline-block">
+
+          <a href="//www.aliyun.com/about" target="_blank" spm="about" data-spm-click="gostr=/aliyun;locaid=about" rel="nofollow">关于我们</a>
+
+          <a href="http://terms.aliyun.com/legal-agreement/terms/suit_bu1_ali_cloud/suit_bu1_ali_cloud201710161525_98396.html" target="_blank" spm="law" data-spm-click="gostr=/aliyun;locaid=law" rel="nofollow">法律声明及隐私权政策</a>
+
+          
+
+          <a href="https://jubao.alibaba.com/index.html?site=ALIYUN" target="_blank" spm="jubao" data-spm-click="gostr=/aliyun;locaid=jubao" rel="nofollow">廉正举报</a>
+
+          <a href="//www.aliyun.com/contact" target="_blank" spm="links" data-spm-click="gostr=/aliyun;locaid=links">联系我们</a>
+          <a href="//www.aliyun.com/careers" target="_blank" spm="links" data-spm-click="gostr=/aliyun;locaid=joinin">加入阿里云</a>
+
+        </p>
+
+        <div class="footer-search" style="display: none;">
+          <form class="frm-search" action="//www.aliyun.com/ss">
+            <input placeholder="搜索" name="k">
+            <button class="btn-search" type="submit">
+              <i class="icon-Search"></i>
+            </button>
+          </form>
+
+        </div>
+
+        <div class="select-choice y-right">
+          <img src="//img.alicdn.com/tps/TB1y5NmKFXXXXckXFXXXXXXXXXX-32-32.png">中国站
+          <i class=" icon-down3"></i>
+          <i class=" icon-up3"></i>
+          <ul>
+            <li><img src="//img.alicdn.com/tps/TB1AmBvKFXXXXazXpXXXXXXXXXX-32-32.png"> International</li>
+          </ul>
+        </div>
+
+        <p class="link-wrap">
+
+          <a class="link-item" rel="nofollow" href="http://www.alibabagroup.com/cn/global/home" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8001">阿里巴巴集团</a>
+
+          <a class="link-item" rel="nofollow" href="//www.taobao.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8002">淘宝网</a>
+
+          <a class="link-item" rel="nofollow" href="//www.tmall.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8003">天猫</a>
+
+          <a class="link-item" rel="nofollow" href="//ju.taobao.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8004">聚划算</a>
+
+          <a class="link-item" rel="nofollow" href="//www.aliexpress.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8005">全球速卖通</a>
+
+          <a class="link-item" rel="nofollow" href="//www.alibaba.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8006">阿里巴巴国际交易市场</a>
+
+          <a class="link-item" rel="nofollow" href="//www.1688.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8007">1688</a>
+
+          <a class="link-item" rel="nofollow" href="//www.alimama.com/index.htm" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8008">阿里妈妈</a>
+
+          <a class="link-item" rel="nofollow" href="//www.fliggy.com" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8009">飞猪</a>
+
+          <a class="link-item" rel="nofollow" href="//www.aliyun.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8010">阿里云计算</a>
+
+          <a class="link-item" rel="nofollow" href="//www.alios.cn/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8011">AliOS</a>
+
+          <a class="link-item" rel="nofollow" href="//aliqin.tmall.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8012">阿里通信</a>
+
+          <a class="link-item" rel="nofollow" href="//wanwang.aliyun.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8013">万网</a>
+
+          <a class="link-item" rel="nofollow" href="http://www.autonavi.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8014">高德</a>
+
+          <a class="link-item" rel="nofollow" href="http://www.uc.cn/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8015">UC</a>
+
+          <a class="link-item" rel="nofollow" href="//www.umeng.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8016">友盟</a>
+
+          <a class="link-item" rel="nofollow" href="//www.xiami.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8017">虾米</a>
+
+          <a class="link-item" rel="nofollow" href="//www.alibabaplanet.com" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8018">阿里星球</a>
+
+          
+
+          <a class="link-item" rel="nofollow" href="//www.dingtalk.com/?lwfrom=20150205111943449" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8020">钉钉</a>
+
+          <a class="link-item" rel="nofollow" href="https://www.alipay.com/" target="_blank" data-spm-click="gostr=/aliyun;locaid=d8021">支付宝</a>
+
+        </p>
+        <p class="copyright">
+          © 2009-2018 Aliyun.com 版权所有 ICP证：浙B2-20080101
+        </p>
+        <!-- <a class="link-item xin" style="display: inline-block;" href="//verify.nic.xin/xinDetail/xinAuthInfoDetail?domainName=aliyun.xin" target="_blank" data-spm-click="gostr=/aliyun;locaid=xin" style="position: relative;">
+          <img class="white" src="//img.alicdn.com/tps/TB1.fDdNpXXXXajXpXXXXXXXXXX-96-42.png" style="margin-top: 4px;height: 21px;">
+        </a> -->
+        <a target="_blank" href="http://idinfo.zjaic.gov.cn/bscx.do?method=lzxx&id=3301963301080000025024" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+          <img style="width: 20px;" src="//gw.alicdn.com/tfs/TB1GxwdSXXXXXa.aXXXXXXXXXXX-65-70.gif" />
+        </a>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010002000099" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+          <img  style="float: left; width: 20px;" src="//img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" /><span style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">浙公网安备 33010002000099号</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+
+  
+
+<!--小云帮助-->
+<div class="float-tool" data-spm="101">
+<div aliyun-lego-data="//www.aliyun.com/lego/xiaoyun/combine">
+<script type='text/javascript'>
+    try{
+      if(py) py('event','viewPage');
+    } catch(e){
+
+    }
+ </script>
+
+  <div aliyun-lego-data="//www.aliyun.com/lego/individuation/footer/95187"></div>
+  <script>
+    (function(){
+      try{
+        var ua = navigator.userAgent.toLowerCase();
+        if(/(aliapp)+[\s]*(\([aliyun|tb|tm|ap]+\/[\d|\.]+\))+/.test(ua))return; //阿里云app/手淘/手猫/支付宝不加载谷歌统计代码
+        
+        $(window).on('load', function(){
+          $("body").append('<script async src="//g.alicdn.com/aliyun/www-dpl/0.5.97/knight/js/data-statistics.js" type="text/javascript"><\/script>');
+          $("body").append('<noscript><div style="display:inline;"><img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/977293844/?value=0&guid=ON&script=0"/></div></noscript>');
+        });
+      }catch(err){ }
+    })()
+  </script>
+</div>
+</div>
+            
+  <!--region -->
+      
+  
+
+<!-- exported scripts -->
+
+
+<script src="//g.alicdn.com/ali-mod/??www-aliyun-common-allinone/0.0.1/index.js,aliyun-common-footer-2017/0.0.83/index.js"></script>
+
+
+
+</body>
+</html>
+
